@@ -1,16 +1,20 @@
 # generate sbom and scanning api and check with swagger 
 
 # Install Syft & Grype
+```
 curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin
 curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sudo sh -s -- -b /usr/local/bin
+```
 
 # Install required Go packages
+```
 go get github.com/gofiber/fiber/v2
 go get github.com/swaggo/fiber-swagger
 go get github.com/swaggo/swag/cmd/swag
 go mod tidy
-
+```
 ### run api using 
+
 ```
  demo git:(main) ✗ go run main.go
 API is running at http://localhost:3000
@@ -26,8 +30,8 @@ API is running at http://localhost:3000
 
 ```
 
-it will start swagger on localhost 3000 here you can pass your docker image or project dir or public github repo that will gernate sbom using syft api 
-
+#### it will start swagger on localhost 3000 here you can pass your docker image or project dir or public github repo that will gernate sbom using syft api 
+```
 ➜   curl -X GET "http://localhost:3000/generate-sbom?image=ubuntu:latest"
 {"file":"sbom.cyclonedx.json","format":"CycloneDX JSON","message":"SBOM generated successfully"}%        
 
@@ -36,9 +40,11 @@ to get vulnerabiity using this command CycloneDX get passed to grype
 ➜  curl -X GET "http://localhost:3000/scan-sbom"                        
 {"message":"Grype scan completed successfully"}%             
 
+```
+### ouput 
 
 ```
- demo git:(main) ✗ go run main.go
+demo git:(main) ✗ go run main.go
 API is running at http://localhost:3000
 
  ┌───────────────────────────────────────────────────┐ 
@@ -58,15 +64,16 @@ libgnutls30t64  3.8.3-1.1ubuntu3.2  3.8.3-1.1ubuntu3.3       deb   CVE-2024-1224
 libssl3t64      3.0.13-0ubuntu3.4   3.0.13-0ubuntu3.5        deb   CVE-2024-9143   Low       
 libssl3t64      3.0.13-0ubuntu3.4   3.0.13-0ubuntu3.5        deb   CVE-2024-13176  Low       
 libtasn1-6      4.19.0-3build1      4.19.0-3ubuntu0.24.04.1  deb   CVE-2024-12133  Medium
-
-
 ```
 
 ### you can pass any public github repo it get stored in temp folder and generate sbom in CycloneDX format 
 
+```
 curl -X GET "http://localhost:3000/generate-sbom?remote=https://github.com/kubernetes/kubernetes.git"
 curl -X GET "http://localhost:3000/scan-sbom"
-check 
+```
+
+### output 
 
 ```
 Cloning into '/tmp/git-sbom'...
@@ -82,3 +89,4 @@ NAME                                                                            
 github.com/golang/glog                                                                  v1.2.2     1.2.4     go-module  GHSA-6wxm-mpqj-6jpf  Medium    
 go.opentelemetry.io/contrib/instrumentation/github.com/emicklei/go-restful/otelrestful  v0.42.0    0.44.0    go-module  GHSA-rcjv-mgp8-qvmr  High
 
+```
