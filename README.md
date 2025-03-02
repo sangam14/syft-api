@@ -1,8 +1,7 @@
 # generate sbom and scanning api and check with swagger 
 
-# Install Syft & Grype
+# Install Grype to access vulnerabiity db locally 
 ```
-curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sudo sh -s -- -b /usr/local/bin
 curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sudo sh -s -- -b /usr/local/bin
 ```
 
