@@ -135,8 +135,11 @@ go.opentelemetry.io/contrib/instrumentation/github.com/emicklei/go-restful/otelr
 
 ### used libraries 
 
+```
 github.com/anchore/go-collections v0.0.0-20241211140901-567f400e9a46 
 github.com/anchore/stereoscope v0.0.13
 github.com/anchore/syft v1.20.0
 github.com/gofiber/fiber/v2 v2.52.6
 github.com/gofiber/swagger v1.1.1
+
+```
