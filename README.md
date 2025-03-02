@@ -12,7 +12,7 @@ go get github.com/swaggo/fiber-swagger
 go get github.com/swaggo/swag/cmd/swag
 go mod tidy
 ```
-### run api using 
+###  keep running this api 
 
 ```
  demo git:(main) ✗ go run main.go
