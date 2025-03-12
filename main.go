@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"strings"
 
 	"github.com/anchore/go-collections"
 	"github.com/anchore/stereoscope"
@@ -17,39 +18,58 @@ import (
 	"github.com/anchore/syft/syft/source/sourceproviders"
 	"github.com/gofiber/fiber/v2"
 	_ "github.com/gofiber/fiber/v2/middleware/logger"
-	"github.com/gofiber/swagger"
 )
 
+func writeToLogFile(message string) {
+	file, err := os.OpenFile("static/output.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		fmt.Println("Failed to open log file:", err)
+		return
+	}
+	defer file.Close()
+	logger := log.New(file, "", log.LstdFlags)
+	logger.Println(message)
+}
+
 func main() {
+
 	app := fiber.New()
 
-	app.Get("/swagger/*", swagger.HandlerDefault)
+	app.Static("/", "./static") // serving static UI files from the static/ directory
+	fmt.Println("Serving static files from ./static")
 	app.Get("/generate-sbom", generateSBOM)
 	app.Get("/scan-sbom", scanSBOM)
+	app.Get("/logs", logsHandler)
 
 	fmt.Println("API is running at http://localhost:3000")
 	log.Fatal(app.Listen(":3000"))
 }
 
 func generateSBOM(c *fiber.Ctx) error {
-	image := c.Query("image")
-	dir := c.Query("dir")
-	remote := c.Query("remote")
+	source := c.Query("source")
+
+	if source == "" {
+		msg := "Error: No valid source provided. Provide an image, directory path, or remote URL."
+		writeToLogFile(msg)
+		return c.Status(400).JSON(fiber.Map{"error": msg})
+	}
 
 	var sourceInput string
-	if image != "" {
-		sourceInput = "image:" + image
-	} else if dir != "" {
-		sourceInput = "dir:" + dir
-	} else if remote != "" {
+	if _, err := os.Stat(source); err == nil {
+		sourceInput = "dir:" + source
+	} else if strings.HasPrefix(source, "http://") || strings.HasPrefix(source, "https://") {
 		cloneDir := "/tmp/git-sbom"
-		if err := cloneGitRepo(remote, cloneDir); err != nil {
-			return c.Status(500).SendString(fmt.Sprintf("Failed to clone repository: %v", err))
+		if err := cloneGitRepo(source, cloneDir); err != nil {
+			msg := fmt.Sprintf("Failed to clone repository: %v", err)
+			writeToLogFile(msg)
+			return c.Status(500).JSON(fiber.Map{"error": msg})
 		}
 		sourceInput = "dir:" + cloneDir
 	} else {
-		return c.Status(400).SendString("Error: No valid source provided. Use 'image', 'dir', or 'remote'.")
+		sourceInput = "image:" + source
 	}
+
+	writeToLogFile(fmt.Sprintf("Processing SBOM for source: %s", sourceInput))
 
 	schemeSource, newUserInput := stereoscope.ExtractSchemeSource(sourceInput, allSourceTags()...)
 	getSourceCfg := syft.DefaultGetSourceConfig()
@@ -60,40 +80,74 @@ func generateSBOM(c *fiber.Ctx) error {
 
 	src, err := syft.GetSource(context.Background(), sourceInput, getSourceCfg)
 	if err != nil {
-		return c.Status(500).SendString(fmt.Sprintf("Failed to get source: %v", err))
+		msg := fmt.Sprintf("Failed to get source: %v", err)
+		writeToLogFile(msg)
+		return c.Status(500).JSON(fiber.Map{"error": msg})
 	}
 
 	cfg := syft.DefaultCreateSBOMConfig().WithCatalogerSelection(
-		pkgcataloging.NewSelectionRequest().WithDefaults(pkgcataloging.InstalledTag, pkgcataloging.DirectoryTag, pkgcataloging.ImageTag),
+		pkgcataloging.NewSelectionRequest().WithDefaults(
+			pkgcataloging.InstalledTag,
+			pkgcataloging.DirectoryTag,
+			pkgcataloging.ImageTag,
+		),
 	)
 	sbomData, err := syft.CreateSBOM(context.Background(), src, cfg)
 	if err != nil {
-		return c.Status(500).SendString(fmt.Sprintf("Failed to create SBOM: %v", err))
+		msg := fmt.Sprintf("Failed to create SBOM: %v", err)
+		writeToLogFile(msg)
+		return c.Status(500).JSON(fiber.Map{"error": msg})
 	}
 
-	saveSBOMToFile(sbomData, "sbom.cyclonedx.json")
+	// Save SBOM to file
+	sbomFile := "sbom.cyclonedx.json"
+	saveSBOMToFile(sbomData, sbomFile)
+
+	// Read SBOM content for response
+	sbomContent, err := os.ReadFile(sbomFile)
+	if err != nil {
+		msg := "Failed to read generated SBOM file."
+		writeToLogFile(msg)
+		return c.Status(500).JSON(fiber.Map{"error": msg})
+	}
+
+	writeToLogFile("SBOM generated successfully.")
 
 	return c.JSON(fiber.Map{
-		"message": "SBOM generated successfully",
-		"format":  "CycloneDX JSON",
-		"file":    "sbom.cyclonedx.json",
+		"message":  "SBOM generated successfully",
+		"format":   "CycloneDX JSON",
+		"file":     sbomFile,
+		"sbomData": string(sbomContent),
 	})
 }
 
 func scanSBOM(c *fiber.Ctx) error {
 	sbomFile := "sbom.cyclonedx.json"
 
-	cmd := exec.Command("grype", sbomFile, "--only-fixed", "-q")
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
+	writeToLogFile("Starting SBOM scan...")
 
-	if err := cmd.Run(); err != nil {
-		return c.Status(500).SendString(fmt.Sprintf("Error running Grype: %v", err))
+	cmd := exec.Command("grype", sbomFile, "--only-fixed", "-q")
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		msg := fmt.Sprintf("Error running Grype: %v", err)
+		writeToLogFile(msg)
+		return c.Status(500).JSON(fiber.Map{"error": msg})
 	}
 
+	writeToLogFile("SBOM scan completed successfully.")
+
 	return c.JSON(fiber.Map{
-		"message": "Grype scan completed successfully",
+		"message":    "Grype scan completed successfully",
+		"scanResult": string(output),
 	})
+}
+
+func logsHandler(c *fiber.Ctx) error {
+	content, err := os.ReadFile("static/output.log")
+	if err != nil {
+		return c.Status(500).SendString("Failed to read logs")
+	}
+	return c.SendString(string(content))
 }
 
 func cloneGitRepo(repoURL string, dest string) error {
