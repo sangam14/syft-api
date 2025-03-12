@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"time"
 
 	"github.com/anchore/go-collections"
 	"github.com/anchore/stereoscope"
@@ -17,10 +18,11 @@ import (
 	"github.com/anchore/syft/syft/source"
 	"github.com/anchore/syft/syft/source/sourceproviders"
 	"github.com/gofiber/fiber/v2"
-	_ "github.com/gofiber/fiber/v2/middleware/logger"
 )
 
 func writeToLogFile(message string) {
+	currentTime := time.Now().Format("2006/01/02 15:04:05")
+	logMessage := fmt.Sprintf("%s %s", currentTime, message)
 	file, err := os.OpenFile("static/output.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		fmt.Println("Failed to open log file:", err)
@@ -28,7 +30,7 @@ func writeToLogFile(message string) {
 	}
 	defer file.Close()
 	logger := log.New(file, "", log.LstdFlags)
-	logger.Println(message)
+	logger.Println(logMessage)
 }
 
 func main() {

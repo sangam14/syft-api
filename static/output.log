@@ -16,3 +16,19 @@
 2025/03/13 02:04:32 SBOM generated successfully.
 2025/03/13 02:04:54 Starting SBOM scan...
 2025/03/13 02:04:55 SBOM scan completed successfully.
+2025/03/13 02:07:21 Starting SBOM scan...
+2025/03/13 02:07:23 SBOM scan completed successfully.
+2025/03/13 02:07:40 Failed to clone repository: exit status 128
+2025/03/13 02:08:05 Failed to clone repository: exit status 128
+2025/03/13 02:14:20 2025/03/13 02:14:20 Processing SBOM for source: image:ubuntu
+2025/03/13 02:14:22 2025/03/13 02:14:22 SBOM generated successfully.
+2025/03/13 02:14:30 2025/03/13 02:14:30 Starting SBOM scan...
+2025/03/13 02:14:31 2025/03/13 02:14:31 SBOM scan completed successfully.
+2025/03/13 02:14:38 2025/03/13 02:14:38 Processing SBOM for source: image:ubuntu
+2025/03/13 02:14:40 2025/03/13 02:14:40 Starting SBOM scan...
+2025/03/13 02:14:40 2025/03/13 02:14:40 SBOM generated successfully.
+2025/03/13 02:14:40 2025/03/13 02:14:40 SBOM scan completed successfully.
+2025/03/13 02:15:11 2025/03/13 02:15:11 Processing SBOM for source: dir:/tmp/git-sbom
+2025/03/13 02:15:11 2025/03/13 02:15:11 SBOM generated successfully.
+2025/03/13 02:15:17 2025/03/13 02:15:17 Starting SBOM scan...
+2025/03/13 02:15:17 2025/03/13 02:15:17 SBOM scan completed successfully.

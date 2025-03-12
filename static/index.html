@@ -7,7 +7,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <input type="text" id="sbomInput" placeholder="Enter SBOM source">
+    <h1>SBOM Scanner</h1>
+    <div>
+        <label for="sbomInput">SBOM Source:</label>
+        <input type="text" id="sbomInput" placeholder="Enter image or directory (e.g., ubuntu:latest, /path/to/dir, https://github.com/user/repo)">
+        
+    </div>
+    
     <button onclick="generateSBOM()">Generate SBOM</button>
     <button onclick="scanSBOM()">Scan SBOM</button>
     <pre id="output"></pre>
