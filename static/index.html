@@ -17,18 +17,8 @@
     <button onclick="generateSBOM()">Generate SBOM</button>
     <button onclick="scanSBOM()">Scan SBOM</button>
     <pre id="output"></pre>
-    <h2>Logs</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Timestamp</th>
-                <th>Log Message</th>
-            </tr>
-        </thead>
-        <tbody id="logTableBody">
-            <tr><td colspan="2">Logs will appear here...</td></tr>
-        </tbody>
-    </table>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jszip/dist/jszip.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

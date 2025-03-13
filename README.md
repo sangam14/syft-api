@@ -1,11 +1,15 @@
-# generate sbom and scanning api and check with swagger 
 
-# Install Grype to access vulnerabiity db locally 
+# syft api 
+
+
+![](./localhost.png)
+
+### Install Grype to access vulnerabiity db locally 
 ```
 curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sudo sh -s -- -b /usr/local/bin
 ```
 
-# Install required Go packages
+#### Install required Go packages
 ```
 go get github.com/gofiber/fiber/v2
 go get github.com/swaggo/fiber-swagger

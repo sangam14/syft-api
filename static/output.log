@@ -32,3 +32,9 @@
 2025/03/13 02:15:11 2025/03/13 02:15:11 SBOM generated successfully.
 2025/03/13 02:15:17 2025/03/13 02:15:17 Starting SBOM scan...
 2025/03/13 02:15:17 2025/03/13 02:15:17 SBOM scan completed successfully.
+2025/03/13 09:41:27 2025/03/13 09:41:27 Processing SBOM for source: image:ubuntu:latest
+2025/03/13 09:41:40 2025/03/13 09:41:40 SBOM generated successfully.
+2025/03/13 09:41:52 2025/03/13 09:41:52 Starting SBOM scan...
+2025/03/13 09:41:53 2025/03/13 09:41:53 SBOM scan completed successfully.
+2025/03/13 09:42:30 2025/03/13 09:42:30 Processing SBOM for source: image:ubuntu:latest
+2025/03/13 09:42:35 2025/03/13 09:42:35 SBOM generated successfully.
