@@ -38,3 +38,83 @@
 2025/03/13 09:41:53 2025/03/13 09:41:53 SBOM scan completed successfully.
 2025/03/13 09:42:30 2025/03/13 09:42:30 Processing SBOM for source: image:ubuntu:latest
 2025/03/13 09:42:35 2025/03/13 09:42:35 SBOM generated successfully.
+2025/03/29 21:51:41 2025/03/29 21:51:41 Processing SBOM for source: dir:/tmp/git-sbom
+2025/03/29 21:51:42 2025/03/29 21:51:42 SBOM generated successfully.
+2025/03/29 21:52:04 2025/03/29 21:52:04 Starting SBOM scan...
+2025/03/29 21:52:24 2025/03/29 21:52:24 SBOM scan completed successfully.
+2025/03/29 21:55:21 2025/03/29 21:55:21 Processing SBOM for source: image:ubuntu:latest
+2025/03/29 21:55:32 2025/03/29 21:55:32 SBOM generated successfully.
+2025/03/29 21:57:47 2025/03/29 21:57:47 Starting SBOM scan...
+2025/03/29 21:57:48 2025/03/29 21:57:48 SBOM scan completed successfully.
+2025/04/04 21:59:19 2025/04/04 21:59:19 Processing SBOM for source: dir:/tmp/git-sbom
+2025/04/04 21:59:20 2025/04/04 21:59:20 SBOM generated successfully.
+2025/04/04 21:59:22 2025/04/04 21:59:22 Starting SBOM scan...
+2025/04/04 21:59:41 2025/04/04 21:59:41 SBOM scan completed successfully.
+2025/04/04 22:04:20 2025/04/04 22:04:20 Processing SBOM for source: dir:/tmp/git-sbom
+2025/04/04 22:04:20 2025/04/04 22:04:20 SBOM generated successfully.
+2025/04/04 22:04:22 2025/04/04 22:04:22 Starting SBOM scan...
+2025/04/04 22:04:23 2025/04/04 22:04:23 SBOM scan completed successfully.
+2025/04/04 22:07:11 2025/04/04 22:07:11 Processing SBOM for source: dir:/tmp/git-sbom
+2025/04/04 22:07:11 2025/04/04 22:07:11 SBOM generated successfully.
+2025/04/04 22:07:21 2025/04/04 22:07:21 Starting SBOM scan...
+2025/04/04 22:07:21 2025/04/04 22:07:21 SBOM scan completed successfully.
+2025/04/04 22:10:47 2025/04/04 22:10:47 Processing SBOM for source: dir:/tmp/git-sbom
+2025/04/04 22:10:48 2025/04/04 22:10:48 SBOM generated successfully.
+2025/04/04 22:10:50 2025/04/04 22:10:50 Starting SBOM scan...
+2025/04/04 22:10:51 2025/04/04 22:10:51 SBOM scan completed successfully.
+2025/04/04 22:12:02 2025/04/04 22:12:02 Processing SBOM for source: dir:/tmp/git-sbom
+2025/04/04 22:12:03 2025/04/04 22:12:03 SBOM generated successfully.
+2025/04/04 22:12:05 2025/04/04 22:12:05 Starting SBOM scan...
+2025/04/04 22:12:06 2025/04/04 22:12:06 SBOM scan completed successfully.
+2025/04/04 22:12:16 2025/04/04 22:12:16 Starting SBOM scan...
+2025/04/04 22:12:17 2025/04/04 22:12:17 SBOM scan completed successfully.
+2025/04/04 22:15:21 2025/04/04 22:15:21 Processing SBOM for source: dir:/tmp/git-sbom
+2025/04/04 22:15:22 2025/04/04 22:15:22 SBOM generated successfully.
+2025/04/04 22:15:23 2025/04/04 22:15:23 Starting SBOM scan...
+2025/04/04 22:15:23 2025/04/04 22:15:23 SBOM scan completed successfully.
+2025/04/04 22:16:25 2025/04/04 22:16:25 Processing SBOM for source: dir:/tmp/git-sbom
+2025/04/04 22:16:25 2025/04/04 22:16:25 SBOM generated successfully.
+2025/04/04 22:16:26 2025/04/04 22:16:26 Starting SBOM scan...
+2025/04/04 22:16:27 2025/04/04 22:16:27 SBOM scan completed successfully.
+2025/04/04 22:16:34 2025/04/04 22:16:34 Starting SBOM scan...
+2025/04/04 22:16:35 2025/04/04 22:16:35 SBOM scan completed successfully.
+2025/04/04 22:18:25 2025/04/04 22:18:25 Starting SBOM scan...
+2025/04/04 22:18:25 2025/04/04 22:18:25 SBOM scan completed successfully.
+2025/04/04 22:19:05 2025/04/04 22:19:05 Starting SBOM scan...
+2025/04/04 22:19:07 2025/04/04 22:19:07 SBOM scan completed successfully.
+2025/04/04 22:20:06 2025/04/04 22:20:06 Starting SBOM scan...
+2025/04/04 22:20:08 2025/04/04 22:20:08 SBOM scan completed successfully.
+2025/04/04 22:20:14 2025/04/04 22:20:14 Starting SBOM scan...
+2025/04/04 22:20:16 2025/04/04 22:20:16 SBOM scan completed successfully.
+2025/04/04 22:21:24 2025/04/04 22:21:24 Processing SBOM for source: dir:/tmp/git-sbom
+2025/04/04 22:21:24 2025/04/04 22:21:24 SBOM generated successfully.
+2025/04/04 22:21:25 2025/04/04 22:21:25 Starting SBOM scan...
+2025/04/04 22:21:28 2025/04/04 22:21:28 SBOM scan completed successfully.
+2025/04/04 22:24:24 2025/04/04 22:24:24 Starting SBOM scan...
+2025/04/04 22:24:25 2025/04/04 22:24:25 SBOM scan completed successfully.
+2025/04/04 22:24:34 2025/04/04 22:24:34 Starting SBOM scan...
+2025/04/04 22:24:34 2025/04/04 22:24:34 SBOM scan completed successfully.
+2025/04/04 22:25:31 2025/04/04 22:25:31 Starting SBOM scan...
+2025/04/04 22:25:32 2025/04/04 22:25:32 SBOM scan completed successfully.
+2025/04/04 22:25:32 2025/04/04 22:25:32 scanSBOM completed in 1.004893333s
+2025/04/04 22:26:30 2025/04/04 22:26:30 Starting SBOM scan...
+2025/04/04 22:26:30 2025/04/04 22:26:30 Starting SBOM scan...
+2025/04/04 22:26:31 2025/04/04 22:26:31 SBOM scan completed successfully.
+2025/04/04 22:26:31 2025/04/04 22:26:31 SBOM scan completed successfully.
+2025/04/04 22:26:31 2025/04/04 22:26:31 scanSBOM completed in 831.809584ms
+2025/04/04 22:26:31 2025/04/04 22:26:31 scanSBOM completed in 723.816209ms
+2025/04/04 22:29:31 2025/04/04 22:29:31 Starting SBOM scan...
+2025/04/04 22:29:33 2025/04/04 22:29:33 SBOM scan completed successfully.
+2025/04/04 22:29:33 2025/04/04 22:29:33 scanSBOM completed in 1.668344s
+2025/04/04 22:33:27 2025/04/04 22:33:27 Starting SBOM scan...
+2025/04/04 22:33:28 2025/04/04 22:33:28 SBOM scan completed successfully.
+2025/04/04 22:33:28 2025/04/04 22:33:28 scanSBOM completed in 1.177889459s
+2025/04/04 22:33:34 2025/04/04 22:33:34 Starting SBOM scan...
+2025/04/04 22:33:40 2025/04/04 22:33:40 SBOM scan completed successfully.
+2025/04/04 22:33:40 2025/04/04 22:33:40 scanSBOM completed in 5.588788584s
+2025/04/04 22:35:45 2025/04/04 22:35:45 Processing SBOM for source: dir:/tmp/git-sbom
+2025/04/04 22:35:46 2025/04/04 22:35:46 SBOM generated successfully.
+2025/04/04 22:35:46 2025/04/04 22:35:46 generateSBOM completed in 2.477531041s
+2025/04/04 22:35:47 2025/04/04 22:35:47 Starting SBOM scan...
+2025/04/04 22:35:49 2025/04/04 22:35:49 SBOM scan completed successfully.
+2025/04/04 22:35:49 2025/04/04 22:35:49 scanSBOM completed in 1.806206292s

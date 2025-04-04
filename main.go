@@ -1,13 +1,18 @@
 package main
 
 import (
-	"context"
+	"bufio"
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"os/exec"
 	"strings"
 	"time"
+
+	"context"
 
 	"github.com/anchore/go-collections"
 	"github.com/anchore/stereoscope"
@@ -18,7 +23,24 @@ import (
 	"github.com/anchore/syft/syft/source"
 	"github.com/anchore/syft/syft/source/sourceproviders"
 	"github.com/gofiber/fiber/v2"
+	"github.com/tmc/langchaingo/llms/ollama"
 )
+
+func extractScriptBlock(text string) string {
+	start := strings.Index(text, "```bash")
+	if start == -1 {
+		start = strings.Index(text, "```")
+	}
+	if start == -1 {
+		return ""
+	}
+	rest := text[start+3:]
+	end := strings.Index(rest, "```")
+	if end == -1 {
+		return ""
+	}
+	return strings.TrimSpace(rest[5:end])
+}
 
 func writeToLogFile(message string) {
 	currentTime := time.Now().Format("2006/01/02 15:04:05")
@@ -42,6 +64,7 @@ func main() {
 	app.Get("/generate-sbom", generateSBOM)
 	app.Get("/scan-sbom", scanSBOM)
 	app.Get("/logs", logsHandler)
+	app.Get("/remediate", remediateWithOllama)
 
 	fmt.Println("API is running at http://localhost:3000")
 	log.Fatal(app.Listen(":3000"))
@@ -126,6 +149,10 @@ func generateSBOM(c *fiber.Ctx) error {
 func scanSBOM(c *fiber.Ctx) error {
 	sbomFile := "sbom.cyclonedx.json"
 
+	if _, err := os.Stat(sbomFile); os.IsNotExist(err) {
+		return c.Status(400).JSON(fiber.Map{"error": "SBOM file not found. Please generate it first."})
+	}
+
 	writeToLogFile("Starting SBOM scan...")
 
 	cmd := exec.Command("grype", sbomFile, "--only-fixed", "-q")
@@ -136,11 +163,52 @@ func scanSBOM(c *fiber.Ctx) error {
 		return c.Status(500).JSON(fiber.Map{"error": msg})
 	}
 
+	scanOutput := string(output)
+	pkgType := "package" // default fallback
+	writeToLogFile(fmt.Sprintf("Detected package type: %s", pkgType))
+	if strings.Contains(scanOutput, "python") {
+		pkgType = "Python package"
+	} else if strings.Contains(scanOutput, "nodejs") || strings.Contains(scanOutput, "npm") {
+		pkgType = "Node.js package"
+	} else if strings.Contains(scanOutput, "java") || strings.Contains(scanOutput, "maven") {
+		pkgType = "Java package"
+	}
+
+	prompt := fmt.Sprintf(`You are a DevSecOps expert. Given the following SBOM scan output, write a clean script that upgrades each vulnerable %s to its fixed version.
+
+Only output the script in a code block.
+
+SBOM Scan:
+%s
+`, pkgType, scanOutput)
+
+	writeToLogFile(fmt.Sprintf("Using Ollama model: %s", "mistral"))
+
+	llm, err := ollama.New(ollama.WithModel("mistral"))
+	if err != nil {
+		writeToLogFile(fmt.Sprintf("Failed to initialize Ollama client: %v", err))
+		return c.Status(500).JSON(fiber.Map{"error": err.Error()})
+	}
+
+	response, err := llm.Call(context.Background(), prompt)
+	if err != nil {
+		writeToLogFile(fmt.Sprintf("Failed to get response from Ollama LLM: %v", err))
+		return c.Status(500).JSON(fiber.Map{"error": err.Error()})
+	}
+
+	llmResponse := response
+
 	writeToLogFile("SBOM scan completed successfully.")
 
 	return c.JSON(fiber.Map{
-		"message":    "Grype scan completed successfully",
-		"scanResult": string(output),
+		"message":             "Grype scan and remediation completed successfully",
+		"scanResult":          string(output),
+		"remediationScript":   llmResponse,
+		"remediationCommands": extractScriptBlock(llmResponse),
+		"pkgType":             pkgType,
+		"markdownResponse":    fmt.Sprintf("```bash\n%s\n```", extractScriptBlock(llmResponse)),
+		"ollamaModel":         "mistral",
+		"ollamaRawResponse":   llmResponse,
 	})
 }
 
@@ -154,6 +222,10 @@ func logsHandler(c *fiber.Ctx) error {
 
 func cloneGitRepo(repoURL string, dest string) error {
 	os.RemoveAll(dest)
+
+	if _, err := exec.LookPath("git"); err != nil {
+		return fmt.Errorf("git is not installed in the container: %v", err)
+	}
 
 	cmd := exec.Command("git", "clone", "--depth", "1", repoURL, dest)
 	cmd.Stdout = os.Stdout
@@ -178,4 +250,88 @@ func saveSBOMToFile(s *sbom.SBOM, filename string) {
 	}
 
 	encoder.Encode(file, *s)
+}
+
+func remediateWithOllama(c *fiber.Ctx) error {
+	sbomFile := "sbom.cyclonedx.json"
+
+	if _, err := os.Stat(sbomFile); os.IsNotExist(err) {
+		return c.Status(400).JSON(fiber.Map{"error": "SBOM file not found. Please generate it first."})
+	}
+
+	writeToLogFile("Starting remediation using Ollama...")
+
+	// Run Grype scan to get output
+	cmd := exec.Command("grype", sbomFile, "--only-fixed", "-q")
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		msg := fmt.Sprintf("Error running Grype for remediation: %v", err)
+		writeToLogFile(msg)
+		return c.Status(500).JSON(fiber.Map{"error": msg})
+	}
+
+	modelName := "mistral"
+	payload := map[string]string{
+		"model":  modelName,
+		"prompt": fmt.Sprintf("Act like a security expert and write a shell script to fix these vulnerabilities:\n\n%s", string(output)),
+	}
+	payloadBytes, _ := json.Marshal(payload)
+	writeToLogFile(fmt.Sprintf("Using Ollama model: %s", modelName))
+
+	// Call Ollama API
+	ollamaHost := os.Getenv("OLLAMA_HOST")
+	if ollamaHost == "" {
+		ollamaHost = "http://host.docker.internal:11434"
+	}
+	url := fmt.Sprintf("%s/api/generate", ollamaHost)
+
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payloadBytes))
+	if err != nil {
+		writeToLogFile(fmt.Sprintf("Failed to create request: %v", err))
+		return c.Status(500).JSON(fiber.Map{"error": err.Error()})
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		writeToLogFile(fmt.Sprintf("Failed to get response from Ollama API: %v", err))
+		return c.Status(500).JSON(fiber.Map{"error": err.Error()})
+	}
+	defer resp.Body.Close()
+
+	var remediationBuilder strings.Builder
+	scanner := bufio.NewScanner(resp.Body)
+	for scanner.Scan() {
+		line := scanner.Text()
+		writeToLogFile("Ollama Stream Line: " + line)
+		var result map[string]interface{}
+		if err := json.Unmarshal([]byte(line), &result); err != nil {
+			writeToLogFile(fmt.Sprintf("Failed to parse Ollama response line: %v", err))
+			continue
+		}
+		if msg, ok := result["message"].(map[string]interface{}); ok {
+			if content, ok := msg["content"].(string); ok {
+				remediationBuilder.WriteString(content)
+			}
+		}
+	}
+	if err := scanner.Err(); err != nil {
+		writeToLogFile(fmt.Sprintf("Scanner error reading Ollama response: %v", err))
+		return c.Status(500).JSON(fiber.Map{"error": "Error reading Ollama response stream"})
+	}
+	if remediationBuilder.Len() == 0 {
+		writeToLogFile("No response content from Ollama. Setting default remediation message.")
+		remediationBuilder.WriteString("No remediation script generated. Please verify the prompt or model.")
+	}
+	remediationText := remediationBuilder.String()
+
+	writeToLogFile("Remediation script generated using Ollama.")
+
+	return c.JSON(fiber.Map{
+		"message":           "Remediation script generated successfully",
+		"remediationScript": remediationText,
+		"ollamaModel":       modelName,
+		"ollamaRawResponse": remediationText,
+	})
 }

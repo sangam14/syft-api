@@ -5,9 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SBOM Scanner</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        pre {
+            background-color: #f4f4f4;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
 </head>
 <body>
-    <h1>SBOM Scanner</h1>
+    <h1>AI Powered SBOM Scanner</h1>
     <div>
         <label for="sbomInput">SBOM Source:</label>
         <input type="text" id="sbomInput" placeholder="Enter image or directory (e.g., ubuntu:latest, /path/to/dir, https://github.com/user/repo)">
@@ -16,9 +30,61 @@
     
     <button onclick="generateSBOM()">Generate SBOM</button>
     <button onclick="scanSBOM()">Scan SBOM</button>
-    <pre id="output"></pre>
+    <div id="results" style="margin-top: 20px;">
+        <h2>Scan Result</h2>
+        <div id="scanResultTable" style="margin-bottom: 1rem;"></div>
+        <pre><code id="scanResult" class="bash"></code></pre>
+
+        <h2>Remediation Explanation</h2>
+        <pre><code id="remediationScript" class="bash"></code></pre>
+
+        <h2>Remediation Commands</h2>
+        <pre><code id="remediationCommands" class="bash"></code></pre>
+        <div style="margin-top: 10px;">
+            <button onclick="copyToClipboard()">Copy Script</button>
+            <button onclick="downloadScript()">Download Script</button>
+        </div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jszip/dist/jszip.min.js"></script>
     <script src="script.js"></script>
+    <script>
+function copyToClipboard() {
+    const scriptText = document.getElementById("remediationCommands").innerText;
+    navigator.clipboard.writeText(scriptText).then(() => {
+        alert("Script copied to clipboard!");
+    }).catch(err => {
+        alert("Failed to copy script: " + err);
+    });
+}
+
+async function scanSBOM() {
+    const res = await fetch('/scan-sbom');
+    const data = await res.json();
+    document.getElementById("scanResult").textContent = data.scanResult || '';
+    document.getElementById("remediationScript").textContent = data.remediationScript || '';
+    document.getElementById("remediationCommands").textContent = data.remediationCommands || '';
+
+    // Render markdown scan result
+    if (data.scanResultMarkdown) {
+        document.getElementById("scanResultTable").innerHTML = marked.parse(data.scanResultMarkdown);
+    }
+
+    alert(data.message || data.error);
+}
+
+function downloadScript() {
+    const scriptText = document.getElementById("remediationCommands").innerText;
+    const blob = new Blob([scriptText], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "vulnerability_fix.sh";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+}
+</script>
 </body>
 </html>
