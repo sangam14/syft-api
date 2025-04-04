@@ -2,6 +2,8 @@
 
 This project provides an AI-powered Software Bill of Materials (SBOM) generator.
 
+![](./diagram-17.png)
+
 ## Current Features
 
 *   **Ollama Integration:**  Supports generating SBOMs using the Ollama model runner.
