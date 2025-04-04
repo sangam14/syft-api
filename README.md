@@ -10,7 +10,8 @@ This project provides an AI-powered Software Bill of Materials (SBOM) generator.
 
 ## Prerequisites
 
-*   Docker and Docker Compose installed.
+*  ollama running locally 
+*  Docker Docker and Docker Compose installed.
 
 ## Installation and Setup
 
@@ -51,3 +52,6 @@ The OpenAPI specification and interface are available at:
 *   More source support.
 *   More output formats.
 
+## Contributing
+
+Contributions to this project are welcome! Please see the CONTRIBUTING.md file for guidelines on how to contribute.
