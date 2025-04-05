@@ -61,8 +61,8 @@ func main() {
 
 	app.Static("/", "./static") // serving static UI files from the static/ directory
 	fmt.Println("Serving static files from ./static")
-	app.Get("/generate-sbom", generateSBOM)
-	app.Get("/scan-sbom", scanSBOM)
+	app.Post("/generate-sbom", generateSBOM)
+	app.Post("/scan-sbom", scanSBOM)
 	app.Get("/logs", logsHandler)
 	app.Get("/remediate", remediateWithOllama)
 
@@ -71,7 +71,13 @@ func main() {
 }
 
 func generateSBOM(c *fiber.Ctx) error {
-	source := c.Query("source")
+	var body struct {
+		SBOMSource string `json:"sbomSource"`
+	}
+	if err := c.BodyParser(&body); err != nil {
+		return c.Status(400).JSON(fiber.Map{"error": "Invalid request body"})
+	}
+	source := body.SBOMSource
 
 	if source == "" {
 		msg := "Error: No valid source provided. Provide an image, directory path, or remote URL."
@@ -147,7 +153,17 @@ func generateSBOM(c *fiber.Ctx) error {
 }
 
 func scanSBOM(c *fiber.Ctx) error {
-	sbomFile := "sbom.cyclonedx.json"
+	var body struct {
+		SBOMFile string `json:"sbomFile"`
+	}
+	if err := c.BodyParser(&body); err != nil {
+		return c.Status(400).JSON(fiber.Map{"error": "Invalid request body"})
+	}
+
+	sbomFile := body.SBOMFile
+	if sbomFile == "" {
+		sbomFile = "sbom.cyclonedx.json"
+	}
 
 	if _, err := os.Stat(sbomFile); os.IsNotExist(err) {
 		return c.Status(400).JSON(fiber.Map{"error": "SBOM file not found. Please generate it first."})

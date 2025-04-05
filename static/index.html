@@ -30,7 +30,15 @@
     
     <button onclick="generateSBOM()">Generate SBOM</button>
     <button onclick="scanSBOM()">Scan SBOM</button>
-    <div id="results" style="margin-top: 20px;">
+    
+    <div id="progressContainer" style="margin-top: 20px; display: none;">
+        <label>Progress:</label>
+        <div style="background: #eee; border-radius: 4px; overflow: hidden; height: 20px;">
+            <div id="progressBar" style="background: #007bff; height: 100%; width: 0%; color: white; text-align: center; font-size: 12px; line-height: 20px;">0%</div>
+        </div>
+    </div>
+
+    <div id="results" style="margin-top: 20px; display: none;">
         <h2>Scan Result</h2>
         <div id="scanResultTable" style="margin-bottom: 1rem;"></div>
         <pre><code id="scanResult" class="bash"></code></pre>
@@ -49,6 +57,72 @@
     <script src="https://cdn.jsdelivr.net/npm/jszip/dist/jszip.min.js"></script>
     <script src="script.js"></script>
     <script>
+  function simulateProgress(callback) {
+      document.getElementById("progressContainer").style.display = "block";
+      const bar = document.getElementById("progressBar");
+      let progress = 0;
+      const interval = setInterval(() => {
+          progress += 10;
+          bar.style.width = progress + "%";
+          bar.textContent = progress + "%";
+          if (progress >= 100) {
+              clearInterval(interval);
+              callback();
+          }
+      }, 100);
+  }
+
+async function generateSBOM() {
+      simulateProgress(async () => {
+          const res = await fetch('/generate-sbom', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                  sbomSource: document.getElementById("sbomInput").value
+              })
+          });
+          const data = await res.json();
+          document.getElementById("scanResult").textContent = data.message || data.error;
+          document.getElementById("results").style.display = "block";
+          document.getElementById("progressContainer").style.display = "none";
+          document.getElementById("progressBar").style.width = "0%";
+          document.getElementById("progressBar").textContent = "0%";
+      });
+}
+
+async function scanSBOM() {
+    document.getElementById("results").style.display = "block";
+    simulateProgress(async () => {
+        const res = await fetch('/scan-sbom', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                sbomSource: document.getElementById("sbomInput").value
+            })
+        });
+        const data = await res.json();
+        document.getElementById("scanResult").textContent = data.scanResult || '';
+        document.getElementById("remediationScript").textContent = data.remediationScript || '';
+        document.getElementById("remediationCommands").textContent = data.remediationCommands || '';
+
+        // Render markdown scan result
+        if (data.scanResultMarkdown) {
+            document.getElementById("scanResultTable").innerHTML = marked.parse(data.scanResultMarkdown);
+        }
+
+        if (!data.scanResult && !data.remediationScript && !data.remediationCommands) {
+            document.getElementById("scanResult").textContent = data.message || data.error;
+        }
+        document.getElementById("progressContainer").style.display = "none";
+        document.getElementById("progressBar").style.width = "0%";
+        document.getElementById("progressBar").textContent = "0%";
+    });
+}
+
 function copyToClipboard() {
     const scriptText = document.getElementById("remediationCommands").innerText;
     navigator.clipboard.writeText(scriptText).then(() => {
@@ -56,21 +130,6 @@ function copyToClipboard() {
     }).catch(err => {
         alert("Failed to copy script: " + err);
     });
-}
-
-async function scanSBOM() {
-    const res = await fetch('/scan-sbom');
-    const data = await res.json();
-    document.getElementById("scanResult").textContent = data.scanResult || '';
-    document.getElementById("remediationScript").textContent = data.remediationScript || '';
-    document.getElementById("remediationCommands").textContent = data.remediationCommands || '';
-
-    // Render markdown scan result
-    if (data.scanResultMarkdown) {
-        document.getElementById("scanResultTable").innerHTML = marked.parse(data.scanResultMarkdown);
-    }
-
-    alert(data.message || data.error);
 }
 
 function downloadScript() {
@@ -85,6 +144,6 @@ function downloadScript() {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
 }
-</script>
+    </script>
 </body>
 </html>
