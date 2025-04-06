@@ -5,8 +5,8 @@ WORKDIR /app
 # Copy go mod and sum files
 COPY go.mod go.sum ./
 
-# Download dependencies
-RUN go mod download
+# Download dependencies and tidy
+RUN go mod download && go mod tidy
 
 # Copy source code
 COPY . .
@@ -19,7 +19,7 @@ FROM alpine:latest
 WORKDIR /app
 
 # Install required dependencies
-RUN apk add --no-cache curl bash syft grype wget tar findutils
+RUN apk add --no-cache curl bash syft grype wget tar findutils git
 
 # Install sbomqs directly from GitHub releases
 RUN ARCH=$(uname -m) && \
@@ -44,9 +44,6 @@ COPY --from=build /app/sbom-app .
 
 # Copy static files and templates
 COPY static/ ./static/
-
-# Create a directory for git cloning
-RUN mkdir -p git-repos
 
 # Set environment variables
 ENV LLAMA_INDEX_ENDPOINT=http://llama-index-service:8000
