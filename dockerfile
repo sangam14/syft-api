@@ -1,31 +1,61 @@
-# Stage 1: Build the Go binary
-FROM golang:1.24 AS builder
+FROM golang:1.24-alpine AS build
 
 WORKDIR /app
-RUN apt-get update && apt-get install -y git curl bash git 
-# Install Grype
-RUN curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
-# Copy go module files
+
+# Copy go mod and sum files
 COPY go.mod go.sum ./
+
+# Download dependencies
 RUN go mod download
 
 # Copy source code
 COPY . .
 
 # Build the application
-RUN CGO_ENABLED=0 GOOS=linux go build -o sbom-app main.go
+RUN go build -o sbom-app .
 
-# Stage 2: Use Debian-based runtime image for production
-FROM debian:bullseye-slim
-
-RUN apt-get update && apt-get install -y git bash curl ca-certificates && rm -rf /var/lib/apt/lists/*
+FROM alpine:latest
 
 WORKDIR /app
 
-COPY --from=builder /app/sbom-app .
-COPY --from=builder /app/static ./static
-COPY --from=builder /usr/local/bin/grype /usr/local/bin/grype
+# Install required dependencies
+RUN apk add --no-cache curl bash syft grype wget tar findutils
+
+# Install sbomqs directly from GitHub releases
+RUN ARCH=$(uname -m) && \
+    if [ "$ARCH" = "x86_64" ]; then \
+        export SBOMQS_ARCH="amd64"; \
+    elif [ "$ARCH" = "aarch64" ]; then \
+        export SBOMQS_ARCH="arm64"; \
+    else \
+        echo "Unsupported architecture: $ARCH"; \
+        export SBOMQS_ARCH="amd64"; \
+    fi && \
+    # Download binary directly (releases use direct binaries)
+    echo "Downloading sbomqs for architecture: ${SBOMQS_ARCH}" && \
+    wget -q "https://github.com/interlynk-io/sbomqs/releases/download/v1.0.3/sbomqs-linux-${SBOMQS_ARCH}" -O /usr/local/bin/sbomqs && \
+    chmod +x /usr/local/bin/sbomqs && \
+    # Verify installation with fallback for errors
+    { sbomqs version && echo "sbomqs installed successfully"; } || \
+    { echo "WARNING: sbomqs is not installed correctly. Quality scoring will be unavailable but other functionality will continue to work."; }
+
+# Copy the built application
+COPY --from=build /app/sbom-app .
+
+# Copy static files and templates
+COPY static/ ./static/
+
+# Create a directory for git cloning
+RUN mkdir -p git-repos
+
+# Set environment variables
+ENV LLAMA_INDEX_ENDPOINT=http://llama-index-service:8000
+ENV OLLAMA_HOST=http://host.docker.internal:11434
+ENV DEFAULT_MODEL=mistral
+ENV SBOM_OUTPUT_FILE=sbom.cyclonedx.json
+ENV LOG_FILE=static/output.log
 
 EXPOSE 3000
 
-ENTRYPOINT ["/app/sbom-app"]
+# Command to run the application
+CMD ["./sbom-app"]

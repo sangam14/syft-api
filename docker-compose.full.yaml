@@ -1,0 +1,46 @@
+version: "3.8"
+services:
+  # Backend Go service
+  sbom-app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - OLLAMA_HOST=http://host.docker.internal:11434
+      - DEFAULT_MODEL=mistral
+      - LOG_FILE=static/output.log
+      - SBOM_OUTPUT_FILE=sbom.cyclonedx.json
+      - LLAMA_INDEX_ENDPOINT=http://llama-index-service:8000
+    volumes:
+      - ./static:/app/static
+      - ./sboms:/app/sboms
+      - sbom-data:/app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - sbom-network
+
+  # Frontend Vue.js service
+  vue-frontend:
+    build: 
+      context: ./static/vue-frontend
+      target: development
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./static/vue-frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    command: npm run serve
+    networks:
+      - sbom-network
+    depends_on:
+      - sbom-app
+
+networks:
+  sbom-network:
+    driver: bridge
+
+volumes:
+  sbom-data:

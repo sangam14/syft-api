@@ -1,120 +1,205 @@
-2025/03/13 01:41:41 Processing SBOM for source: dir:/tmp/git-sbom
-2025/03/13 01:41:43 SBOM generated successfully.
-2025/03/13 01:41:51 Starting SBOM scan...
-2025/03/13 01:41:52 SBOM scan completed successfully.
-2025/03/13 01:42:16 Processing SBOM for source: dir:/tmp/git-sbom
-2025/03/13 01:42:18 SBOM generated successfully.
-2025/03/13 01:45:32 Processing SBOM for source: dir:/tmp/git-sbom
-2025/03/13 01:45:34 SBOM generated successfully.
-2025/03/13 01:45:41 Starting SBOM scan...
-2025/03/13 01:45:42 SBOM scan completed successfully.
-2025/03/13 02:01:46 Processing SBOM for source: dir:/tmp/git-sbom
-2025/03/13 02:01:48 SBOM generated successfully.
-2025/03/13 02:02:06 Starting SBOM scan...
-2025/03/13 02:02:07 SBOM scan completed successfully.
-2025/03/13 02:04:30 Processing SBOM for source: dir:/tmp/git-sbom
-2025/03/13 02:04:32 SBOM generated successfully.
-2025/03/13 02:04:54 Starting SBOM scan...
-2025/03/13 02:04:55 SBOM scan completed successfully.
-2025/03/13 02:07:21 Starting SBOM scan...
-2025/03/13 02:07:23 SBOM scan completed successfully.
-2025/03/13 02:07:40 Failed to clone repository: exit status 128
-2025/03/13 02:08:05 Failed to clone repository: exit status 128
-2025/03/13 02:14:20 2025/03/13 02:14:20 Processing SBOM for source: image:ubuntu
-2025/03/13 02:14:22 2025/03/13 02:14:22 SBOM generated successfully.
-2025/03/13 02:14:30 2025/03/13 02:14:30 Starting SBOM scan...
-2025/03/13 02:14:31 2025/03/13 02:14:31 SBOM scan completed successfully.
-2025/03/13 02:14:38 2025/03/13 02:14:38 Processing SBOM for source: image:ubuntu
-2025/03/13 02:14:40 2025/03/13 02:14:40 Starting SBOM scan...
-2025/03/13 02:14:40 2025/03/13 02:14:40 SBOM generated successfully.
-2025/03/13 02:14:40 2025/03/13 02:14:40 SBOM scan completed successfully.
-2025/03/13 02:15:11 2025/03/13 02:15:11 Processing SBOM for source: dir:/tmp/git-sbom
-2025/03/13 02:15:11 2025/03/13 02:15:11 SBOM generated successfully.
-2025/03/13 02:15:17 2025/03/13 02:15:17 Starting SBOM scan...
-2025/03/13 02:15:17 2025/03/13 02:15:17 SBOM scan completed successfully.
-2025/03/13 09:41:27 2025/03/13 09:41:27 Processing SBOM for source: image:ubuntu:latest
-2025/03/13 09:41:40 2025/03/13 09:41:40 SBOM generated successfully.
-2025/03/13 09:41:52 2025/03/13 09:41:52 Starting SBOM scan...
-2025/03/13 09:41:53 2025/03/13 09:41:53 SBOM scan completed successfully.
-2025/03/13 09:42:30 2025/03/13 09:42:30 Processing SBOM for source: image:ubuntu:latest
-2025/03/13 09:42:35 2025/03/13 09:42:35 SBOM generated successfully.
-2025/03/29 21:51:41 2025/03/29 21:51:41 Processing SBOM for source: dir:/tmp/git-sbom
-2025/03/29 21:51:42 2025/03/29 21:51:42 SBOM generated successfully.
-2025/03/29 21:52:04 2025/03/29 21:52:04 Starting SBOM scan...
-2025/03/29 21:52:24 2025/03/29 21:52:24 SBOM scan completed successfully.
-2025/03/29 21:55:21 2025/03/29 21:55:21 Processing SBOM for source: image:ubuntu:latest
-2025/03/29 21:55:32 2025/03/29 21:55:32 SBOM generated successfully.
-2025/03/29 21:57:47 2025/03/29 21:57:47 Starting SBOM scan...
-2025/03/29 21:57:48 2025/03/29 21:57:48 SBOM scan completed successfully.
-2025/04/04 21:59:19 2025/04/04 21:59:19 Processing SBOM for source: dir:/tmp/git-sbom
-2025/04/04 21:59:20 2025/04/04 21:59:20 SBOM generated successfully.
-2025/04/04 21:59:22 2025/04/04 21:59:22 Starting SBOM scan...
-2025/04/04 21:59:41 2025/04/04 21:59:41 SBOM scan completed successfully.
-2025/04/04 22:04:20 2025/04/04 22:04:20 Processing SBOM for source: dir:/tmp/git-sbom
-2025/04/04 22:04:20 2025/04/04 22:04:20 SBOM generated successfully.
-2025/04/04 22:04:22 2025/04/04 22:04:22 Starting SBOM scan...
-2025/04/04 22:04:23 2025/04/04 22:04:23 SBOM scan completed successfully.
-2025/04/04 22:07:11 2025/04/04 22:07:11 Processing SBOM for source: dir:/tmp/git-sbom
-2025/04/04 22:07:11 2025/04/04 22:07:11 SBOM generated successfully.
-2025/04/04 22:07:21 2025/04/04 22:07:21 Starting SBOM scan...
-2025/04/04 22:07:21 2025/04/04 22:07:21 SBOM scan completed successfully.
-2025/04/04 22:10:47 2025/04/04 22:10:47 Processing SBOM for source: dir:/tmp/git-sbom
-2025/04/04 22:10:48 2025/04/04 22:10:48 SBOM generated successfully.
-2025/04/04 22:10:50 2025/04/04 22:10:50 Starting SBOM scan...
-2025/04/04 22:10:51 2025/04/04 22:10:51 SBOM scan completed successfully.
-2025/04/04 22:12:02 2025/04/04 22:12:02 Processing SBOM for source: dir:/tmp/git-sbom
-2025/04/04 22:12:03 2025/04/04 22:12:03 SBOM generated successfully.
-2025/04/04 22:12:05 2025/04/04 22:12:05 Starting SBOM scan...
-2025/04/04 22:12:06 2025/04/04 22:12:06 SBOM scan completed successfully.
-2025/04/04 22:12:16 2025/04/04 22:12:16 Starting SBOM scan...
-2025/04/04 22:12:17 2025/04/04 22:12:17 SBOM scan completed successfully.
-2025/04/04 22:15:21 2025/04/04 22:15:21 Processing SBOM for source: dir:/tmp/git-sbom
-2025/04/04 22:15:22 2025/04/04 22:15:22 SBOM generated successfully.
-2025/04/04 22:15:23 2025/04/04 22:15:23 Starting SBOM scan...
-2025/04/04 22:15:23 2025/04/04 22:15:23 SBOM scan completed successfully.
-2025/04/04 22:16:25 2025/04/04 22:16:25 Processing SBOM for source: dir:/tmp/git-sbom
-2025/04/04 22:16:25 2025/04/04 22:16:25 SBOM generated successfully.
-2025/04/04 22:16:26 2025/04/04 22:16:26 Starting SBOM scan...
-2025/04/04 22:16:27 2025/04/04 22:16:27 SBOM scan completed successfully.
-2025/04/04 22:16:34 2025/04/04 22:16:34 Starting SBOM scan...
-2025/04/04 22:16:35 2025/04/04 22:16:35 SBOM scan completed successfully.
-2025/04/04 22:18:25 2025/04/04 22:18:25 Starting SBOM scan...
-2025/04/04 22:18:25 2025/04/04 22:18:25 SBOM scan completed successfully.
-2025/04/04 22:19:05 2025/04/04 22:19:05 Starting SBOM scan...
-2025/04/04 22:19:07 2025/04/04 22:19:07 SBOM scan completed successfully.
-2025/04/04 22:20:06 2025/04/04 22:20:06 Starting SBOM scan...
-2025/04/04 22:20:08 2025/04/04 22:20:08 SBOM scan completed successfully.
-2025/04/04 22:20:14 2025/04/04 22:20:14 Starting SBOM scan...
-2025/04/04 22:20:16 2025/04/04 22:20:16 SBOM scan completed successfully.
-2025/04/04 22:21:24 2025/04/04 22:21:24 Processing SBOM for source: dir:/tmp/git-sbom
-2025/04/04 22:21:24 2025/04/04 22:21:24 SBOM generated successfully.
-2025/04/04 22:21:25 2025/04/04 22:21:25 Starting SBOM scan...
-2025/04/04 22:21:28 2025/04/04 22:21:28 SBOM scan completed successfully.
-2025/04/04 22:24:24 2025/04/04 22:24:24 Starting SBOM scan...
-2025/04/04 22:24:25 2025/04/04 22:24:25 SBOM scan completed successfully.
-2025/04/04 22:24:34 2025/04/04 22:24:34 Starting SBOM scan...
-2025/04/04 22:24:34 2025/04/04 22:24:34 SBOM scan completed successfully.
-2025/04/04 22:25:31 2025/04/04 22:25:31 Starting SBOM scan...
-2025/04/04 22:25:32 2025/04/04 22:25:32 SBOM scan completed successfully.
-2025/04/04 22:25:32 2025/04/04 22:25:32 scanSBOM completed in 1.004893333s
-2025/04/04 22:26:30 2025/04/04 22:26:30 Starting SBOM scan...
-2025/04/04 22:26:30 2025/04/04 22:26:30 Starting SBOM scan...
-2025/04/04 22:26:31 2025/04/04 22:26:31 SBOM scan completed successfully.
-2025/04/04 22:26:31 2025/04/04 22:26:31 SBOM scan completed successfully.
-2025/04/04 22:26:31 2025/04/04 22:26:31 scanSBOM completed in 831.809584ms
-2025/04/04 22:26:31 2025/04/04 22:26:31 scanSBOM completed in 723.816209ms
-2025/04/04 22:29:31 2025/04/04 22:29:31 Starting SBOM scan...
-2025/04/04 22:29:33 2025/04/04 22:29:33 SBOM scan completed successfully.
-2025/04/04 22:29:33 2025/04/04 22:29:33 scanSBOM completed in 1.668344s
-2025/04/04 22:33:27 2025/04/04 22:33:27 Starting SBOM scan...
-2025/04/04 22:33:28 2025/04/04 22:33:28 SBOM scan completed successfully.
-2025/04/04 22:33:28 2025/04/04 22:33:28 scanSBOM completed in 1.177889459s
-2025/04/04 22:33:34 2025/04/04 22:33:34 Starting SBOM scan...
-2025/04/04 22:33:40 2025/04/04 22:33:40 SBOM scan completed successfully.
-2025/04/04 22:33:40 2025/04/04 22:33:40 scanSBOM completed in 5.588788584s
-2025/04/04 22:35:45 2025/04/04 22:35:45 Processing SBOM for source: dir:/tmp/git-sbom
-2025/04/04 22:35:46 2025/04/04 22:35:46 SBOM generated successfully.
-2025/04/04 22:35:46 2025/04/04 22:35:46 generateSBOM completed in 2.477531041s
-2025/04/04 22:35:47 2025/04/04 22:35:47 Starting SBOM scan...
-2025/04/04 22:35:49 2025/04/04 22:35:49 SBOM scan completed successfully.
-2025/04/04 22:35:49 2025/04/04 22:35:49 scanSBOM completed in 1.806206292s
+2025/04/06 09:20:09 2025/04/06 09:20:09 Processing SBOM for source: image:ubuntu
+2025/04/06 09:20:16 2025/04/06 09:20:16 SBOM generated successfully.
+2025/04/06 09:20:30 2025/04/06 09:20:30 Starting SBOM scan...
+2025/04/06 09:20:50 2025/04/06 09:20:50 Detected package type: package
+2025/04/06 09:20:50 2025/04/06 09:20:50 Using Ollama model: mistral
+2025/04/06 09:20:50 2025/04/06 09:20:50 Failed to get remediation: failed to get response from Ollama LLM: Post "http://host.docker.internal:11434/api/chat": dial tcp 192.168.65.254:11434: connect: connection refused
+2025/04/06 09:21:00 2025/04/06 09:21:00 Starting SBOM scan...
+2025/04/06 09:21:00 2025/04/06 09:21:00 Detected package type: package
+2025/04/06 09:21:01 2025/04/06 09:21:01 Failed to get LlamaIndex analysis: failed to call LlamaIndex API: Post "http://llama-index-api:8000/query": dial tcp: lookup llama-index-api on 127.0.0.11:53: no such host, falling back to Ollama
+2025/04/06 09:21:01 2025/04/06 09:21:01 Using Ollama model: mistral
+2025/04/06 09:21:01 2025/04/06 09:21:01 Failed to get remediation: failed to get response from Ollama LLM: Post "http://host.docker.internal:11434/api/chat": dial tcp 192.168.65.254:11434: connect: connection refused
+2025/04/06 09:24:11 2025/04/06 09:24:11 Processing SBOM for source: image:ubuntu
+2025/04/06 09:24:18 2025/04/06 09:24:18 SBOM generated successfully.
+2025/04/06 09:24:19 2025/04/06 09:24:19 Starting SBOM scan...
+2025/04/06 09:24:39 2025/04/06 09:24:39 Detected package type: package
+2025/04/06 09:24:39 2025/04/06 09:24:39 Failed to get LlamaIndex analysis: failed to call LlamaIndex API: Post "http://llama-index-api:8000/query": dial tcp: lookup llama-index-api on 127.0.0.11:53: no such host, falling back to Ollama
+2025/04/06 09:24:39 2025/04/06 09:24:39 Failed to get remediation: Ollama service is not available: Ollama service returned status: 404
+2025/04/06 09:24:49 2025/04/06 09:24:49 Starting SBOM scan...
+2025/04/06 09:24:50 2025/04/06 09:24:50 Detected package type: package
+2025/04/06 09:24:50 2025/04/06 09:24:50 Failed to get LlamaIndex analysis: failed to call LlamaIndex API: Post "http://llama-index-api:8000/query": dial tcp: lookup llama-index-api on 127.0.0.11:53: no such host, falling back to Ollama
+2025/04/06 09:24:50 2025/04/06 09:24:50 Failed to get remediation: Ollama service is not available: Ollama service returned status: 404
+2025/04/06 09:33:04 2025/04/06 09:33:04 Processing SBOM for source: image:ubuntu
+2025/04/06 09:33:11 2025/04/06 09:33:11 SBOM generated successfully.
+2025/04/06 09:33:15 2025/04/06 09:33:15 Starting SBOM scan...
+2025/04/06 09:33:37 2025/04/06 09:33:37 Detected package type: package
+2025/04/06 09:33:37 2025/04/06 09:33:37 Failed to get LlamaIndex analysis: failed to call LlamaIndex API: Post "http://llama-index-api:8000/query": dial tcp: lookup llama-index-api on 127.0.0.11:53: no such host, falling back to Ollama
+2025/04/06 09:33:37 2025/04/06 09:33:37 ollama availability check failed: failed to connect to Ollama: Post "http://host.docker.internal:11434/api/generate": dial tcp 192.168.65.254:11434: connect: connection refused
+2025/04/06 09:33:37 2025/04/06 09:33:37 Failed to get remediation: ollama service is not available, please ensure ollama is running and the model 'mistral' is installed: failed to connect to Ollama: Post "http://host.docker.internal:11434/api/generate": dial tcp 192.168.65.254:11434: connect: connection refused
+2025/04/06 09:34:02 2025/04/06 09:34:02 Starting SBOM scan...
+2025/04/06 09:34:03 2025/04/06 09:34:03 Detected package type: package
+2025/04/06 09:34:03 2025/04/06 09:34:03 ollama availability check failed: failed to connect to Ollama: Post "http://host.docker.internal:11434/api/generate": dial tcp 192.168.65.254:11434: connect: connection refused
+2025/04/06 09:34:03 2025/04/06 09:34:03 Failed to get remediation: ollama service is not available, please ensure ollama is running and the model 'mistral' is installed: failed to connect to Ollama: Post "http://host.docker.internal:11434/api/generate": dial tcp 192.168.65.254:11434: connect: connection refused
+2025/04/06 09:34:28 2025/04/06 09:34:28 Processing SBOM for source: image:ubuntu
+2025/04/06 09:34:36 2025/04/06 09:34:36 SBOM generated successfully.
+2025/04/06 09:34:37 2025/04/06 09:34:37 Starting SBOM scan...
+2025/04/06 09:34:38 2025/04/06 09:34:38 Detected package type: package
+2025/04/06 09:34:38 2025/04/06 09:34:38 Failed to get LlamaIndex analysis: failed to call LlamaIndex API: Post "http://llama-index-api:8000/query": dial tcp: lookup llama-index-api on 127.0.0.11:53: no such host, falling back to Ollama
+2025/04/06 09:34:38 2025/04/06 09:34:38 ollama availability check failed: failed to connect to Ollama: Post "http://host.docker.internal:11434/api/generate": dial tcp 192.168.65.254:11434: connect: connection refused
+2025/04/06 09:34:38 2025/04/06 09:34:38 Failed to get remediation: ollama service is not available, please ensure ollama is running and the model 'mistral' is installed: failed to connect to Ollama: Post "http://host.docker.internal:11434/api/generate": dial tcp 192.168.65.254:11434: connect: connection refused
+2025/04/06 09:34:47 2025/04/06 09:34:47 Starting SBOM scan...
+2025/04/06 09:34:48 2025/04/06 09:34:48 Detected package type: package
+2025/04/06 09:34:48 2025/04/06 09:34:48 Failed to get LlamaIndex analysis: failed to call LlamaIndex API: Post "http://llama-index-api:8000/query": dial tcp: lookup llama-index-api on 127.0.0.11:53: no such host, falling back to Ollama
+2025/04/06 09:34:48 2025/04/06 09:34:48 ollama availability check failed: failed to connect to Ollama: Post "http://host.docker.internal:11434/api/generate": dial tcp 192.168.65.254:11434: connect: connection refused
+2025/04/06 09:34:48 2025/04/06 09:34:48 Failed to get remediation: ollama service is not available, please ensure ollama is running and the model 'mistral' is installed: failed to connect to Ollama: Post "http://host.docker.internal:11434/api/generate": dial tcp 192.168.65.254:11434: connect: connection refused
+2025/04/06 09:37:20 2025/04/06 09:37:20 Processing SBOM for source: image:ubuntu
+2025/04/06 09:37:29 2025/04/06 09:37:29 SBOM generated successfully.
+2025/04/06 09:37:30 2025/04/06 09:37:30 Starting SBOM scan...
+2025/04/06 09:37:51 2025/04/06 09:37:51 Detected package type: package
+2025/04/06 09:37:51 2025/04/06 09:37:51 Failed to get LlamaIndex analysis: failed to call LlamaIndex API: Post "http://llama-index-api:8000/query": dial tcp: lookup llama-index-api on 127.0.0.11:53: no such host, falling back to Ollama
+2025/04/06 09:37:51 2025/04/06 09:37:51 ollama availability check failed: failed to connect to Ollama: Post "http://host.docker.internal:11434/api/generate": dial tcp 192.168.65.254:11434: connect: connection refused
+2025/04/06 09:37:51 2025/04/06 09:37:51 Failed to get remediation: ollama service is not available, please ensure ollama is running and the model 'mistral' is installed: failed to connect to Ollama: Post "http://host.docker.internal:11434/api/generate": dial tcp 192.168.65.254:11434: connect: connection refused
+2025/04/06 09:40:42 2025/04/06 09:40:42 Processing SBOM for source: image:ubuntu
+2025/04/06 09:40:49 2025/04/06 09:40:49 SBOM generated successfully.
+2025/04/06 09:40:50 2025/04/06 09:40:50 Starting SBOM scan...
+2025/04/06 09:40:50 2025/04/06 09:40:50 Detected package type: package
+2025/04/06 09:40:50 2025/04/06 09:40:50 Failed to get LlamaIndex analysis: failed to call LlamaIndex API: Post "http://llama-index-api:8000/query": dial tcp: lookup llama-index-api on 127.0.0.11:53: no such host, falling back to Ollama
+2025/04/06 09:40:50 2025/04/06 09:40:50 ollama availability check failed: failed to connect to Ollama: Post "http://host.docker.internal:11434/api/generate": dial tcp 192.168.65.254:11434: connect: connection refused
+2025/04/06 09:40:50 2025/04/06 09:40:50 Failed to get remediation: ollama service is not available, please ensure ollama is running and the model 'mistral' is installed: failed to connect to Ollama: Post "http://host.docker.internal:11434/api/generate": dial tcp 192.168.65.254:11434: connect: connection refused
+2025/04/06 09:41:19 2025/04/06 09:41:19 Starting SBOM scan...
+2025/04/06 09:41:20 2025/04/06 09:41:20 Detected package type: package
+2025/04/06 09:41:20 2025/04/06 09:41:20 Failed to get LlamaIndex analysis: failed to call LlamaIndex API: Post "http://llama-index-api:8000/query": dial tcp: lookup llama-index-api on 127.0.0.11:53: no such host, falling back to Ollama
+2025/04/06 09:41:26 2025/04/06 09:41:26 Using Ollama model: mistral
+2025/04/06 09:41:34 2025/04/06 09:41:34 SBOM scan completed successfully.
+2025/04/06 09:42:28 2025/04/06 09:42:28 Processing SBOM for source: dir:/tmp/git-sbom
+2025/04/06 09:42:29 2025/04/06 09:42:29 SBOM generated successfully.
+2025/04/06 09:42:31 2025/04/06 09:42:31 Starting SBOM scan...
+2025/04/06 09:42:32 2025/04/06 09:42:32 Detected package type: Python package
+2025/04/06 09:42:32 2025/04/06 09:42:32 Failed to get LlamaIndex analysis: failed to call LlamaIndex API: Post "http://llama-index-api:8000/query": dial tcp: lookup llama-index-api on 127.0.0.11:53: no such host, falling back to Ollama
+2025/04/06 09:42:35 2025/04/06 09:42:35 Using Ollama model: mistral
+2025/04/06 09:42:42 2025/04/06 09:42:42 SBOM scan completed successfully.
+2025/04/06 09:45:13 2025/04/06 09:45:13 Processing SBOM for source: dir:/tmp/git-sbom
+2025/04/06 09:45:14 2025/04/06 09:45:14 SBOM generated successfully.
+2025/04/06 09:45:17 2025/04/06 09:45:17 Starting SBOM scan...
+2025/04/06 09:45:17 2025/04/06 09:45:17 Detected package type: Python package
+2025/04/06 09:45:17 2025/04/06 09:45:17 Failed to get LlamaIndex analysis: failed to call LlamaIndex API: Post "http://llama-index-api:8000/query": dial tcp: lookup llama-index-api on 127.0.0.11:53: no such host, falling back to Ollama
+2025/04/06 09:45:18 2025/04/06 09:45:18 Using Ollama model: mistral
+2025/04/06 09:45:26 2025/04/06 09:45:26 SBOM scan completed successfully.
+2025/04/06 09:45:39 2025/04/06 09:45:39 Starting SBOM scan...
+2025/04/06 09:45:40 2025/04/06 09:45:40 Detected package type: Python package
+2025/04/06 09:45:40 2025/04/06 09:45:40 Failed to get LlamaIndex analysis: failed to call LlamaIndex API: Post "http://llama-index-api:8000/query": dial tcp: lookup llama-index-api on 127.0.0.11:53: no such host, falling back to Ollama
+2025/04/06 09:45:43 2025/04/06 09:45:43 Using Ollama model: mistral
+2025/04/06 09:45:51 2025/04/06 09:45:51 SBOM scan completed successfully.
+2025/04/06 09:45:56 2025/04/06 09:45:56 Starting SBOM scan...
+2025/04/06 09:45:57 2025/04/06 09:45:57 Detected package type: Python package
+2025/04/06 09:46:00 2025/04/06 09:46:00 Using Ollama model: mistral
+2025/04/06 09:46:07 2025/04/06 09:46:07 SBOM scan completed successfully.
+2025/04/06 09:56:44 2025/04/06 09:56:44 Processing SBOM for source: image:ubuntu
+2025/04/06 09:56:51 2025/04/06 09:56:51 SBOM generated successfully.
+2025/04/06 09:56:54 2025/04/06 09:56:54 Starting SBOM scan...
+2025/04/06 09:57:13 2025/04/06 09:57:13 Detected package type: package
+2025/04/06 09:57:13 2025/04/06 09:57:13 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/06 09:57:13 2025/04/06 09:57:13 Warning: Error calculating quality score: sbomqs tool not installed: exec: "sbomqs": executable file not found in $PATH
+2025/04/06 09:57:13 2025/04/06 09:57:13 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/06 09:57:19 2025/04/06 09:57:19 Using Ollama model: mistral
+2025/04/06 09:57:27 2025/04/06 09:57:27 SBOM scan completed successfully.
+2025/04/06 10:00:57 2025/04/06 10:00:57 Processing SBOM for source: image:ubuntu
+2025/04/06 10:01:04 2025/04/06 10:01:04 failed to clone repository: failed to clone git repository: exit status 128
+2025/04/06 10:01:05 2025/04/06 10:01:05 SBOM generated successfully.
+2025/04/06 10:01:24 2025/04/06 10:01:24 Processing SBOM for source: image:ubuntu
+2025/04/06 10:01:32 2025/04/06 10:01:32 SBOM generated successfully.
+2025/04/06 10:01:33 2025/04/06 10:01:33 Starting SBOM scan...
+2025/04/06 10:01:34 2025/04/06 10:01:34 Detected package type: package
+2025/04/06 10:01:34 2025/04/06 10:01:34 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/06 10:01:34 2025/04/06 10:01:34 Warning: Error calculating quality score: sbomqs tool not installed: exec: "sbomqs": executable file not found in $PATH
+2025/04/06 10:01:34 2025/04/06 10:01:34 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/06 10:01:39 2025/04/06 10:01:39 Using Ollama model: mistral
+2025/04/06 10:01:47 2025/04/06 10:01:47 SBOM scan completed successfully.
+2025/04/06 10:04:24 2025/04/06 10:04:24 Processing SBOM for source: image:ubuntu
+2025/04/06 10:04:31 2025/04/06 10:04:31 SBOM generated successfully.
+2025/04/06 10:04:37 2025/04/06 10:04:37 Starting SBOM scan...
+2025/04/06 10:04:57 2025/04/06 10:04:57 Detected package type: package
+2025/04/06 10:04:57 2025/04/06 10:04:57 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/06 10:04:57 2025/04/06 10:04:57 Warning: Error calculating quality score: sbomqs tool not installed: exec: "sbomqs": executable file not found in $PATH
+2025/04/06 10:04:57 2025/04/06 10:04:57 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/06 10:05:01 2025/04/06 10:05:01 Using Ollama model: mistral
+2025/04/06 10:05:09 2025/04/06 10:05:09 SBOM scan completed successfully.
+2025/04/06 10:05:35 2025/04/06 10:05:35 Processing SBOM for source: image:ubuntu
+2025/04/06 10:05:44 2025/04/06 10:05:44 SBOM generated successfully.
+2025/04/06 10:05:58 2025/04/06 10:05:58 Processing SBOM for source: image:ubuntu
+2025/04/06 10:06:05 2025/04/06 10:06:05 SBOM generated successfully.
+2025/04/06 10:06:08 2025/04/06 10:06:08 Starting SBOM scan...
+2025/04/06 10:06:09 2025/04/06 10:06:09 Detected package type: package
+2025/04/06 10:06:09 2025/04/06 10:06:09 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/06 10:06:09 2025/04/06 10:06:09 Warning: Error calculating quality score: sbomqs tool not installed: exec: "sbomqs": executable file not found in $PATH
+2025/04/06 10:06:09 2025/04/06 10:06:09 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/06 10:06:17 2025/04/06 10:06:17 Using Ollama model: mistral
+2025/04/06 10:06:25 2025/04/06 10:06:25 SBOM scan completed successfully.
+2025/04/06 10:07:57 2025/04/06 10:07:57 Processing SBOM for source: image:ubuntu
+2025/04/06 10:08:03 2025/04/06 10:08:03 SBOM generated successfully.
+2025/04/06 10:08:04 2025/04/06 10:08:04 Starting SBOM scan...
+2025/04/06 10:08:05 2025/04/06 10:08:05 Detected package type: package
+2025/04/06 10:08:05 2025/04/06 10:08:05 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/06 10:08:05 2025/04/06 10:08:05 Warning: Error calculating quality score: sbomqs tool not installed: exec: "sbomqs": executable file not found in $PATH
+2025/04/06 10:08:05 2025/04/06 10:08:05 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/06 10:08:09 2025/04/06 10:08:09 Using Ollama model: mistral
+2025/04/06 10:08:17 2025/04/06 10:08:17 SBOM scan completed successfully.
+2025/04/06 10:08:20 2025/04/06 10:08:20 Processing SBOM for source: image:ubuntu
+2025/04/06 10:08:26 2025/04/06 10:08:26 SBOM generated successfully.
+2025/04/06 10:08:30 2025/04/06 10:08:30 Starting SBOM scan...
+2025/04/06 10:08:31 2025/04/06 10:08:31 Detected package type: package
+2025/04/06 10:08:31 2025/04/06 10:08:31 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/06 10:08:31 2025/04/06 10:08:31 Warning: Error calculating quality score: sbomqs tool not installed: exec: "sbomqs": executable file not found in $PATH
+2025/04/06 10:08:31 2025/04/06 10:08:31 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/06 10:08:34 2025/04/06 10:08:34 Using Ollama model: mistral
+2025/04/06 10:08:43 2025/04/06 10:08:43 SBOM scan completed successfully.
+2025/04/06 10:08:56 2025/04/06 10:08:56 Processing SBOM for source: image:ubuntu
+2025/04/06 10:09:03 2025/04/06 10:09:03 SBOM generated successfully.
+2025/04/06 10:09:04 2025/04/06 10:09:04 Starting SBOM scan...
+2025/04/06 10:09:05 2025/04/06 10:09:05 Detected package type: package
+2025/04/06 10:09:05 2025/04/06 10:09:05 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/06 10:09:05 2025/04/06 10:09:05 Warning: Error calculating quality score: sbomqs tool not installed: exec: "sbomqs": executable file not found in $PATH
+2025/04/06 10:09:05 2025/04/06 10:09:05 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/06 10:09:07 2025/04/06 10:09:07 Using Ollama model: mistral
+2025/04/06 10:09:15 2025/04/06 10:09:15 SBOM scan completed successfully.
+2025/04/06 10:14:32 2025/04/06 10:14:32 Processing SBOM for source: image:ubuntu
+2025/04/06 10:14:40 2025/04/06 10:14:40 SBOM generated successfully.
+2025/04/06 10:14:42 2025/04/06 10:14:42 Starting SBOM scan...
+2025/04/06 10:14:43 2025/04/06 10:14:43 Detected package type: package
+2025/04/06 10:14:43 2025/04/06 10:14:43 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/06 10:14:43 2025/04/06 10:14:43 Warning: Error calculating quality score: sbomqs tool not installed: exec: "sbomqs": executable file not found in $PATH
+2025/04/06 10:14:43 2025/04/06 10:14:43 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/06 10:14:48 2025/04/06 10:14:48 Using Ollama model: mistral
+2025/04/06 10:14:56 2025/04/06 10:14:56 SBOM scan completed successfully.
+2025/04/06 10:17:19 2025/04/06 10:17:19 Processing SBOM for source: image:ubuntu
+2025/04/06 10:17:26 2025/04/06 10:17:26 SBOM generated successfully.
+2025/04/06 10:17:28 2025/04/06 10:17:28 Starting SBOM scan...
+2025/04/06 10:17:48 2025/04/06 10:17:48 Detected package type: package
+2025/04/06 10:17:48 2025/04/06 10:17:48 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/06 10:17:48 2025/04/06 10:17:48 Warning: Error calculating quality score: sbomqs tool not installed: exec: "sbomqs": executable file not found in $PATH
+2025/04/06 10:17:48 2025/04/06 10:17:48 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/06 10:17:51 2025/04/06 10:17:51 Using Ollama model: mistral
+2025/04/06 10:18:00 2025/04/06 10:18:00 SBOM scan completed successfully.
+2025/04/06 10:18:46 2025/04/06 10:18:46 Starting SBOM scan...
+2025/04/06 10:18:47 2025/04/06 10:18:47 Detected package type: package
+2025/04/06 10:18:47 2025/04/06 10:18:47 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/06 10:18:47 2025/04/06 10:18:47 Warning: Error calculating quality score: sbomqs tool not installed: exec: "sbomqs": executable file not found in $PATH
+2025/04/06 10:18:47 2025/04/06 10:18:47 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/06 10:18:50 2025/04/06 10:18:50 Using Ollama model: mistral
+2025/04/06 10:18:58 2025/04/06 10:18:58 SBOM scan completed successfully.
+2025/04/06 10:19:34 2025/04/06 10:19:34 Processing SBOM for source: image:ubuntu
+2025/04/06 10:19:42 2025/04/06 10:19:42 SBOM generated successfully.
+2025/04/06 10:19:47 2025/04/06 10:19:47 Starting SBOM scan...
+2025/04/06 10:19:48 2025/04/06 10:19:48 Detected package type: package
+2025/04/06 10:19:48 2025/04/06 10:19:48 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/06 10:19:48 2025/04/06 10:19:48 Warning: Error calculating quality score: sbomqs tool not installed: exec: "sbomqs": executable file not found in $PATH
+2025/04/06 10:19:48 2025/04/06 10:19:48 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/06 10:19:51 2025/04/06 10:19:51 Using Ollama model: mistral
+2025/04/06 10:19:59 2025/04/06 10:19:59 SBOM scan completed successfully.
+2025/04/06 10:20:44 2025/04/06 10:20:44 Processing SBOM for source: image:ubuntu
+2025/04/06 10:20:50 2025/04/06 10:20:50 SBOM generated successfully.
+2025/04/06 10:20:51 2025/04/06 10:20:51 Starting SBOM scan...
+2025/04/06 10:20:52 2025/04/06 10:20:52 Detected package type: package
+2025/04/06 10:20:52 2025/04/06 10:20:52 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/06 10:20:52 2025/04/06 10:20:52 Warning: Error calculating quality score: sbomqs tool not installed: exec: "sbomqs": executable file not found in $PATH
+2025/04/06 10:20:52 2025/04/06 10:20:52 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/06 10:20:56 2025/04/06 10:20:56 Using Ollama model: mistral
+2025/04/06 10:21:04 2025/04/06 10:21:04 SBOM scan completed successfully.
+2025/04/06 10:27:48 2025/04/06 10:27:48 Processing SBOM for source: image:ubuntu
+2025/04/06 10:27:59 2025/04/06 10:27:59 SBOM generated successfully.
+2025/04/06 10:28:03 2025/04/06 10:28:03 Starting SBOM scan...
+2025/04/06 10:29:07 2025/04/06 10:29:07 Detected package type: package
+2025/04/06 10:29:07 2025/04/06 10:29:07 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/06 10:29:08 2025/04/06 10:29:08 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/06 10:29:15 2025/04/06 10:29:15 Using Ollama model: mistral
+2025/04/06 10:29:23 2025/04/06 10:29:23 SBOM scan completed successfully.

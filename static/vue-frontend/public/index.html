@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>SBOM Generator</title>
+    <script>
+      // Global error handler to catch any unhandled errors
+      window.onerror = function(message, source, lineno, colno, error) {
+        console.error('Global error caught:', error);
+        console.error('Error details:', { message, source, lineno, colno });
+        // Prevent undefined variable errors that might occur in other error handlers
+        return true; // Prevents the error from bubbling up
+      };
+      
+      // Ensure output is defined globally to prevent reference errors
+      window.output = null;
+      
+      // Catch unhandled promise rejections
+      window.addEventListener('unhandledrejection', function(event) {
+        console.error('Unhandled promise rejection:', event.reason);
+        // Prevent the default handler
+        event.preventDefault();
+      });
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
