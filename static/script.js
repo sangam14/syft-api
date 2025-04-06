@@ -1,71 +1,113 @@
-const outputDiv = document.getElementById('output');
-const logTable = document.getElementById('logTableBody');
+function simulateProgress(callback) {
+    document.getElementById("progressContainer").style.display = "block";
+    const bar = document.getElementById("progressBar");
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += 10;
+        bar.style.width = progress + "%";
+        bar.textContent = progress + "%";
+        if (progress >= 100) {
+            clearInterval(interval);
+            callback();
+        }
+    }, 100);
+}
 
-// Utility to update output area
-const updateOutput = (text, isError = false) => {
-    outputDiv.textContent = text;
-    outputDiv.style.color = isError ? 'red' : 'black';
-};
+async function generateSBOM() {
+    simulateProgress(async () => {
+        try {
+            const res = await fetch('/generate-sbom', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    sbomSource: document.getElementById("sbomInput").value
+                })
+            });
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json();
+            document.getElementById("scanResult").textContent = data.message || data.error || 'Unknown error';
+            document.getElementById("results").style.display = "block";
+        } catch (error) {
+            console.error("Error generating SBOM:", error);
+            document.getElementById("scanResult").textContent = "Error generating SBOM. Check console for details.";
+            document.getElementById("results").style.display = "block";
+        } finally {
+            document.getElementById("progressContainer").style.display = "none";
+            document.getElementById("progressBar").style.width = "0%";
+            document.getElementById("progressBar").textContent = "0%";
+        }
+    });
+}
 
-// Fetch and render logs
-const fetchLogs = async () => {
-    try {
-        const response = await fetch('/logs');
-        const data = await response.text();
-        const logLines = data.split("\n").filter(line => line.trim() !== "");
-        logTable.innerHTML = "";
+async function scanSBOM() {
+    document.getElementById("results").style.display = "block";
+    simulateProgress(async () => {
+        try {
+            const res = await fetch('/scan-sbom', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    sbomSource: document.getElementById("sbomInput").value
+                })
+            });
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            const data = await res.json();
 
-        logLines.forEach(line => {
-            const row = document.createElement("tr");
-            row.classList.add("log-row");
+            if (!data.scanResult && !data.remediationScript && !data.remediationCommands) {
+                document.getElementById("scanResult").textContent = data.message || data.error || 'Unknown error';
+                return;
+            }
 
-            const parts = line.split(" ");
-            const timestamp = parts.slice(0, 2).join(" ");
-            const message = parts.slice(2).join(" ");
+            document.getElementById("scanResult").textContent = data.scanResult || '';
+            document.getElementById("remediationScript").textContent = data.remediationScript || '';
+            document.getElementById("remediationCommands").textContent = data.remediationCommands || '';
 
-            const timestampCell = document.createElement("td");
-            timestampCell.textContent = timestamp;
+            // Render markdown scan result
+            if (data.scanResultMarkdown) {
+                document.getElementById("scanResultTable").innerHTML = marked.parse(data.scanResultMarkdown);
+            }
+            
+            // Enable copy and download buttons if there are remediation commands
+            const remediationCommands = document.getElementById("remediationCommands").textContent;
+            document.getElementById("copyButton").disabled = !remediationCommands;
+            document.getElementById("downloadButton").disabled = !remediationCommands;
+        } catch (error) {
+            console.error("Error scanning SBOM:", error);
+            document.getElementById("scanResult").textContent = "Error scanning SBOM. Check console for details.";
+        } finally {
+            document.getElementById("progressContainer").style.display = "none";
+            document.getElementById("progressBar").style.width = "0%";
+            document.getElementById("progressBar").textContent = "0%";
+        }
+    });
+}
 
-            const messageCell = document.createElement("td");
-            messageCell.textContent = message;
+function copyToClipboard() {
+    const scriptText = document.getElementById("remediationCommands").innerText;
+    navigator.clipboard.writeText(scriptText).then(() => {
+        alert("Script copied to clipboard!");
+    }).catch(err => {
+        alert("Failed to copy script: " + err);
+    });
+}
 
-            row.appendChild(timestampCell);
-            row.appendChild(messageCell);
-            logTable.appendChild(row);
-        });
-    } catch (error) {
-        console.error('Error fetching logs:', error);
-    }
-};
-
-// Generate SBOM from user input
-const generateSBOM = async () => {
-    const source = document.getElementById('sbomInput').value;
-    updateOutput('Generating SBOM...');
-
-    try {
-        const response = await fetch(`/generate-sbom?source=${encodeURIComponent(source)}`);
-        const data = await response.json();
-        updateOutput(JSON.stringify(data, null, 2));
-    } catch (error) {
-        console.error("Generate SBOM API error:", error);
-        updateOutput(`Error: ${error}`, true);
-    }
-};
-
-// Scan SBOM and display result
-const scanSBOM = async () => {
-    updateOutput('Scanning SBOM...');
-
-    try {
-        const response = await fetch('/scan-sbom');
-        const data = await response.json();
-        updateOutput(JSON.stringify(data, null, 2));
-    } catch (error) {
-        console.error("Scan SBOM API error:", error);
-        updateOutput(`Error: ${error}`, true);
-    }
-};
-
-// Auto-refresh logs every 2 seconds
-setInterval(fetchLogs, 2000);
+function downloadScript() {
+    const scriptText = document.getElementById("remediationCommands").innerText;
+    const blob = new Blob([scriptText], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "vulnerability_fix.sh";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+}

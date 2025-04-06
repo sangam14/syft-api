@@ -6,11 +6,13 @@ require (
 	github.com/anchore/go-collections v0.0.0-20241211140901-567f400e9a46
 	github.com/anchore/stereoscope v0.0.13
 	github.com/anchore/syft v1.20.0
-	github.com/gofiber/fiber/v2 v2.52.6
 	github.com/google/uuid v1.6.0 // indirect
 )
 
-require github.com/tmc/langchaingo v0.1.13
+require (
+	github.com/gorilla/mux v1.8.1
+	github.com/tmc/langchaingo v0.1.13
+)
 
 require (
 	dario.cat/mergo v1.0.1 // indirect
@@ -169,9 +171,6 @@ require (
 	github.com/sylabs/squashfs v1.0.4 // indirect
 	github.com/therootcompany/xz v1.0.1 // indirect
 	github.com/ulikunitz/xz v0.5.12 // indirect
-	github.com/valyala/bytebufferpool v1.0.0 // indirect
-	github.com/valyala/fasthttp v1.51.0 // indirect
-	github.com/valyala/tcplisten v1.0.0 // indirect
 	github.com/vbatts/go-mtree v0.5.4 // indirect
 	github.com/vbatts/tar-split v0.11.6 // indirect
 	github.com/vifraa/gopom v1.0.0 // indirect

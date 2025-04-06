@@ -49,101 +49,12 @@
         <h2>Remediation Commands</h2>
         <pre><code id="remediationCommands" class="bash"></code></pre>
         <div style="margin-top: 10px;">
-            <button onclick="copyToClipboard()">Copy Script</button>
-            <button onclick="downloadScript()">Download Script</button>
+            <button id="copyButton" onclick="copyToClipboard()" disabled>Copy Script</button>
+            <button id="downloadButton" onclick="downloadScript()" disabled>Download Script</button>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jszip/dist/jszip.min.js"></script>
     <script src="script.js"></script>
-    <script>
-  function simulateProgress(callback) {
-      document.getElementById("progressContainer").style.display = "block";
-      const bar = document.getElementById("progressBar");
-      let progress = 0;
-      const interval = setInterval(() => {
-          progress += 10;
-          bar.style.width = progress + "%";
-          bar.textContent = progress + "%";
-          if (progress >= 100) {
-              clearInterval(interval);
-              callback();
-          }
-      }, 100);
-  }
-
-async function generateSBOM() {
-      simulateProgress(async () => {
-          const res = await fetch('/generate-sbom', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                  sbomSource: document.getElementById("sbomInput").value
-              })
-          });
-          const data = await res.json();
-          document.getElementById("scanResult").textContent = data.message || data.error;
-          document.getElementById("results").style.display = "block";
-          document.getElementById("progressContainer").style.display = "none";
-          document.getElementById("progressBar").style.width = "0%";
-          document.getElementById("progressBar").textContent = "0%";
-      });
-}
-
-async function scanSBOM() {
-    document.getElementById("results").style.display = "block";
-    simulateProgress(async () => {
-        const res = await fetch('/scan-sbom', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                sbomSource: document.getElementById("sbomInput").value
-            })
-        });
-        const data = await res.json();
-        document.getElementById("scanResult").textContent = data.scanResult || '';
-        document.getElementById("remediationScript").textContent = data.remediationScript || '';
-        document.getElementById("remediationCommands").textContent = data.remediationCommands || '';
-
-        // Render markdown scan result
-        if (data.scanResultMarkdown) {
-            document.getElementById("scanResultTable").innerHTML = marked.parse(data.scanResultMarkdown);
-        }
-
-        if (!data.scanResult && !data.remediationScript && !data.remediationCommands) {
-            document.getElementById("scanResult").textContent = data.message || data.error;
-        }
-        document.getElementById("progressContainer").style.display = "none";
-        document.getElementById("progressBar").style.width = "0%";
-        document.getElementById("progressBar").textContent = "0%";
-    });
-}
-
-function copyToClipboard() {
-    const scriptText = document.getElementById("remediationCommands").innerText;
-    navigator.clipboard.writeText(scriptText).then(() => {
-        alert("Script copied to clipboard!");
-    }).catch(err => {
-        alert("Failed to copy script: " + err);
-    });
-}
-
-function downloadScript() {
-    const scriptText = document.getElementById("remediationCommands").innerText;
-    const blob = new Blob([scriptText], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "vulnerability_fix.sh";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-}
-    </script>
 </body>
 </html>
