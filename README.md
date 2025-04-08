@@ -1,5 +1,8 @@
 # AI-Powered SBOM Generator
 
+![](./pic1.png)
+
+
 This project provides an AI-powered Software Bill of Materials (SBOM) generator.
 
 ![](./diagram-17.png)
