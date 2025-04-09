@@ -1,11 +1,7 @@
-# AI-Powered SBOM Generator
+# AI-Powered Remediation for SBOM
 
 ![](./pic1.png)
 
-
-This project provides an AI-powered Software Bill of Materials (SBOM) generator.
-
-![](./diagram-17.png)
 
 ## Current Features
 
