@@ -10,12 +10,35 @@
       window.onerror = function(message, source, lineno, colno, error) {
         console.error('Global error caught:', error);
         console.error('Error details:', { message, source, lineno, colno });
+        
+        // Check if it's a reference error for 'output'
+        if (error && error.name === 'ReferenceError' && error.message.includes("Can't find variable: output")) {
+          console.warn('Handling output reference error');
+          // Define any missing variables that might be causing issues
+          if (typeof window.output === 'undefined') {
+            window.output = null;
+          }
+        }
+        
         // Prevent undefined variable errors that might occur in other error handlers
         return true; // Prevents the error from bubbling up
       };
       
-      // Ensure output is defined globally to prevent reference errors
+      // Ensure commonly used variables are defined globally to prevent reference errors
       window.output = null;
+      
+      // Make sure the copyToClipboard function is available globally
+      window.copyToClipboard = function(text) {
+        if (!text) return;
+        
+        navigator.clipboard.writeText(text)
+          .then(() => {
+            console.log('Text copied to clipboard');
+          })
+          .catch(err => {
+            console.error('Failed to copy text: ', err);
+          });
+      };
       
       // Catch unhandled promise rejections
       window.addEventListener('unhandledrejection', function(event) {

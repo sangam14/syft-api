@@ -269,3 +269,136 @@
 2025/04/08 12:51:35 2025/04/08 12:51:35 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
 2025/04/08 12:51:42 2025/04/08 12:51:42 Using Ollama model: mistral
 2025/04/08 12:51:50 2025/04/08 12:51:50 SBOM scan completed successfully.
+2025/04/09 14:32:52 2025/04/09 14:32:52 Processing SBOM for source: image:ubuntu
+2025/04/09 14:33:02 2025/04/09 14:33:02 SBOM generated successfully.
+2025/04/09 14:33:04 2025/04/09 14:33:04 Starting SBOM scan...
+2025/04/09 14:33:27 2025/04/09 14:33:27 Detected package type: package
+2025/04/09 14:33:27 2025/04/09 14:33:27 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/09 14:33:34 2025/04/09 14:33:34 Using Ollama model: mistral
+2025/04/09 14:33:36 2025/04/09 14:33:36 SBOM scan completed successfully.
+2025/04/09 14:47:35 2025/04/09 14:47:35 Processing SBOM for source: image:ubuntu
+2025/04/09 14:47:40 2025/04/09 14:47:40 SBOM generated successfully.
+2025/04/09 14:47:41 2025/04/09 14:47:41 Starting SBOM scan...
+2025/04/09 14:48:06 2025/04/09 14:48:06 Detected package type: package
+2025/04/09 14:48:06 2025/04/09 14:48:06 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/09 14:48:08 2025/04/09 14:48:08 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/09 14:48:18 2025/04/09 14:48:18 SBOM scan completed successfully.
+2025/04/13 05:14:48 2025/04/13 05:14:48 Processing SBOM for source: image:ubuntu
+2025/04/13 05:14:54 2025/04/13 05:14:54 SBOM generated successfully.
+2025/04/13 05:15:02 2025/04/13 05:15:02 Starting SBOM scan...
+2025/04/13 05:15:21 2025/04/13 05:15:21 Detected package type: package
+2025/04/13 05:15:21 2025/04/13 05:15:21 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/13 05:15:22 2025/04/13 05:15:22 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/13 05:15:32 2025/04/13 05:15:32 Using Ollama model: mistral
+2025/04/13 05:15:34 2025/04/13 05:15:34 SBOM scan completed successfully.
+2025/04/13 05:15:44 2025/04/13 05:15:44 Starting SBOM scan...
+2025/04/13 05:15:45 2025/04/13 05:15:45 Detected package type: package
+2025/04/13 05:15:45 2025/04/13 05:15:45 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/13 05:15:46 2025/04/13 05:15:46 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/13 05:15:48 2025/04/13 05:15:48 Using Ollama model: mistral
+2025/04/13 05:15:50 2025/04/13 05:15:50 SBOM scan completed successfully.
+2025/04/13 05:16:15 2025/04/13 05:16:15 Processing SBOM for source: image:python
+2025/04/13 05:16:43 2025/04/13 05:16:43 SBOM generated successfully.
+2025/04/13 05:16:48 2025/04/13 05:16:48 Starting SBOM scan...
+2025/04/13 05:16:50 2025/04/13 05:16:50 Detected package type: Python package
+2025/04/13 05:16:50 2025/04/13 05:16:50 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/13 05:16:51 2025/04/13 05:16:51 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/13 05:16:58 2025/04/13 05:16:58 Using Ollama model: mistral
+2025/04/13 05:17:03 2025/04/13 05:17:03 SBOM scan completed successfully.
+2025/04/13 05:20:14 2025/04/13 05:20:14 Processing SBOM for source: image:ubuntu
+2025/04/13 05:20:19 2025/04/13 05:20:19 SBOM generated successfully.
+2025/04/13 05:20:23 2025/04/13 05:20:23 Starting SBOM scan...
+2025/04/13 05:20:24 2025/04/13 05:20:24 Detected package type: package
+2025/04/13 05:20:24 2025/04/13 05:20:24 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/13 05:20:24 2025/04/13 05:20:24 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/13 05:20:27 2025/04/13 05:20:27 Using Ollama model: mistral
+2025/04/13 05:20:29 2025/04/13 05:20:29 SBOM scan completed successfully.
+2025/04/13 05:52:02 2025/04/13 05:52:02 Processing SBOM for source: image:python
+2025/04/13 05:52:31 2025/04/13 05:52:31 SBOM generated successfully.
+2025/04/13 05:53:44 2025/04/13 05:53:44 Starting SBOM scan...
+2025/04/13 05:54:04 2025/04/13 05:54:04 Detected package type: Python package
+2025/04/13 05:54:04 2025/04/13 05:54:04 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/13 05:54:16 2025/04/13 05:54:16 Using Ollama model: mistral
+2025/04/13 05:54:21 2025/04/13 05:54:21 SBOM scan completed successfully.
+2025/04/13 05:54:59 2025/04/13 05:54:59 Processing SBOM for source: image:ubuntu
+2025/04/13 05:55:05 2025/04/13 05:55:05 SBOM generated successfully.
+2025/04/13 05:55:13 2025/04/13 05:55:13 Starting SBOM scan...
+2025/04/13 05:55:14 2025/04/13 05:55:14 Detected package type: package
+2025/04/13 05:55:14 2025/04/13 05:55:14 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/13 05:55:14 2025/04/13 05:55:14 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/13 05:55:18 2025/04/13 05:55:18 Using Ollama model: mistral
+2025/04/13 05:55:20 2025/04/13 05:55:20 SBOM scan completed successfully.
+2025/04/13 06:02:09 2025/04/13 06:02:09 Processing SBOM for source: image:python
+2025/04/13 06:02:39 2025/04/13 06:02:39 SBOM generated successfully.
+2025/04/13 06:02:43 2025/04/13 06:02:43 Starting SBOM scan...
+2025/04/13 06:02:44 2025/04/13 06:02:44 Detected package type: Python package
+2025/04/13 06:02:44 2025/04/13 06:02:44 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/13 06:02:46 2025/04/13 06:02:46 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/13 06:02:52 2025/04/13 06:02:52 Using Ollama model: mistral
+2025/04/13 06:02:57 2025/04/13 06:02:57 SBOM scan completed successfully.
+2025/04/13 06:09:01 2025/04/13 06:09:01 Processing SBOM for source: image:python
+2025/04/13 06:09:30 2025/04/13 06:09:30 SBOM generated successfully.
+2025/04/13 06:16:36 2025/04/13 06:16:36 Processing SBOM for source: image:python
+2025/04/13 06:17:06 2025/04/13 06:17:06 SBOM generated successfully.
+2025/04/13 06:30:48 2025/04/13 06:30:48 Processing SBOM for source: image:python
+2025/04/13 06:31:18 2025/04/13 06:31:18 SBOM generated successfully.
+2025/04/13 06:32:06 2025/04/13 06:32:06 Starting SBOM scan...
+2025/04/13 06:32:08 2025/04/13 06:32:08 Detected package type: Python package
+2025/04/13 06:32:08 2025/04/13 06:32:08 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/13 06:32:09 2025/04/13 06:32:09 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/13 06:32:14 2025/04/13 06:32:14 Using Ollama model: mistral
+2025/04/13 06:32:19 2025/04/13 06:32:19 Processing SBOM for source: image:python
+2025/04/13 06:32:19 2025/04/13 06:32:19 SBOM scan completed successfully.
+2025/04/13 06:32:48 2025/04/13 06:32:48 SBOM generated successfully.
+2025/04/13 06:33:59 2025/04/13 06:33:59 Processing SBOM for source: image:python
+2025/04/13 06:34:28 2025/04/13 06:34:28 SBOM generated successfully.
+2025/04/13 06:34:40 2025/04/13 06:34:40 Starting SBOM scan...
+2025/04/13 06:34:42 2025/04/13 06:34:42 Detected package type: Python package
+2025/04/13 06:34:42 2025/04/13 06:34:42 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/13 06:34:43 2025/04/13 06:34:43 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/13 06:34:46 2025/04/13 06:34:46 Using Ollama model: mistral
+2025/04/13 06:34:51 2025/04/13 06:34:51 SBOM scan completed successfully.
+2025/04/13 06:36:29 2025/04/13 06:36:29 Processing SBOM for source: dir:/tmp/git-sbom
+2025/04/13 06:36:29 2025/04/13 06:36:29 SBOM generated successfully.
+2025/04/13 06:36:43 2025/04/13 06:36:43 Starting SBOM scan...
+2025/04/13 06:36:44 2025/04/13 06:36:44 Detected package type: Python package
+2025/04/13 06:36:44 2025/04/13 06:36:44 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/13 06:36:44 2025/04/13 06:36:44 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/13 06:36:48 2025/04/13 06:36:48 Using Ollama model: mistral
+2025/04/13 06:36:59 2025/04/13 06:36:59 SBOM scan completed successfully.
+2025/04/13 06:37:51 2025/04/13 06:37:51 Processing SBOM for source: dir:/tmp/git-sbom
+2025/04/13 06:37:52 2025/04/13 06:37:52 SBOM generated successfully.
+2025/04/13 06:41:39 2025/04/13 06:41:39 Processing SBOM for source: image:python
+2025/04/13 06:42:08 2025/04/13 06:42:08 SBOM generated successfully.
+2025/04/13 06:42:36 2025/04/13 06:42:36 Starting SBOM scan...
+2025/04/13 06:42:37 2025/04/13 06:42:37 Detected package type: Python package
+2025/04/13 06:42:37 2025/04/13 06:42:37 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/13 06:42:38 2025/04/13 06:42:38 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/13 06:42:43 2025/04/13 06:42:43 Using Ollama model: mistral
+2025/04/13 06:42:48 2025/04/13 06:42:48 SBOM scan completed successfully.
+2025/04/13 06:42:57 2025/04/13 06:42:57 Starting SBOM scan...
+2025/04/13 06:42:59 2025/04/13 06:42:59 Detected package type: Python package
+2025/04/13 06:42:59 2025/04/13 06:42:59 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/13 06:43:00 2025/04/13 06:43:00 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/13 06:43:06 2025/04/13 06:43:06 Using Ollama model: mistral
+2025/04/13 06:43:11 2025/04/13 06:43:11 SBOM scan completed successfully.
+2025/04/13 06:44:17 2025/04/13 06:44:17 Processing SBOM for source: image:python
+2025/04/13 06:44:46 2025/04/13 06:44:46 SBOM generated successfully.
+2025/04/13 06:51:18 2025/04/13 06:51:18 Processing SBOM for source: image:python
+2025/04/13 06:51:47 2025/04/13 06:51:47 SBOM generated successfully.
+2025/04/13 06:52:11 2025/04/13 06:52:11 Starting SBOM scan...
+2025/04/13 06:52:12 2025/04/13 06:52:12 Detected package type: Python package
+2025/04/13 06:52:12 2025/04/13 06:52:12 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/13 06:52:14 2025/04/13 06:52:14 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/13 06:52:25 2025/04/13 06:52:25 Using Ollama model: mistral
+2025/04/13 06:52:30 2025/04/13 06:52:30 SBOM scan completed successfully.
+2025/04/13 07:01:20 2025/04/13 07:01:20 Processing SBOM for source: image:python
+2025/04/13 07:01:48 2025/04/13 07:01:48 SBOM generated successfully.
+2025/04/13 07:03:54 2025/04/13 07:03:54 Processing SBOM for source: image:python
+2025/04/13 07:04:19 2025/04/13 07:04:19 Processing SBOM for source: image:python
+2025/04/13 07:04:22 2025/04/13 07:04:22 SBOM generated successfully.
+2025/04/13 07:04:48 2025/04/13 07:04:48 SBOM generated successfully.
+2025/04/13 07:08:42 2025/04/13 07:08:42 Processing SBOM for source: image:python
+2025/04/13 07:08:56 2025/04/13 07:08:56 Processing SBOM for source: image:python
+2025/04/13 07:09:17 2025/04/13 07:09:17 SBOM generated successfully.
+2025/04/13 07:09:31 2025/04/13 07:09:31 SBOM generated successfully.

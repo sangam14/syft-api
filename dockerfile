@@ -52,7 +52,6 @@ ENV DEFAULT_MODEL=mistral
 ENV SBOM_OUTPUT_FILE=sbom.cyclonedx.json
 ENV LOG_FILE=static/output.log
 
-EXPOSE 3000
 
 # Command to run the application
 CMD ["./sbom-app"]

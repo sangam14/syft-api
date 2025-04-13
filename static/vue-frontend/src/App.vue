@@ -1,224 +1,303 @@
 <template>
   <div id="app">
-    <header>
-      <h1><span class="icon">📊</span> SBOM Generator</h1>
-    </header>
-    
-    <div class="container">
-      <div class="card generate-card">
-        <h2><span class="step-number">1</span> Generate SBOM</h2>
-        <div class="form-group">
-          <label for="sbomSource">Source (image, directory or git URL):</label>
-          <div class="input-group">
-            <input 
-              v-model="sbomSource" 
-              type="text" 
-              id="sbomSource" 
-              placeholder="e.g. node:latest or ./path/to/dir"
-            >
-            <button 
-              @click="generateSBOM" 
-              :disabled="isGenerating" 
-              class="primary-button"
-            >
-              <span v-if="isGenerating" class="loader"></span>
-              {{ isGenerating ? 'Generating...' : 'Generate' }}
-            </button>
-          </div>
-          <p class="hint">Enter a Docker image name, local directory path, or Git repository URL</p>
-        </div>
-        
-        <div v-if="errorMessage" class="alert error-message">
-          <div class="alert-header">
-            <span class="alert-icon">⚠️</span>
-            <h3>Error</h3>
-          </div>
-          <pre>{{ errorMessage }}</pre>
-        </div>
-        
-        <div v-if="sbomResult" class="result-section">
-          <div class="result-header">
-            <span class="success-icon">✅</span>
-            <h3>SBOM Generated Successfully</h3>
-          </div>
-          <div class="result-content">
-            <pre>{{ sbomResult }}</pre>
-          </div>
-        </div>
+    <!-- Navigation Sidebar -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <span class="icon">📊</span>
+        <h1>SBOM Generator</h1>
       </div>
+      <div class="nav-links">
+        <a href="#generate" class="nav-link active">
+          <span class="nav-icon">🔧</span>
+          Generate SBOM
+        </a>
+        <a href="#analytics" class="nav-link">
+          <span class="nav-icon">📈</span>
+          Analytics
+        </a>
+        <a href="#scan" class="nav-link">
+          <span class="nav-icon">🔍</span>
+          Scan SBOM
+        </a>
+        <a href="#logs" class="nav-link">
+          <span class="nav-icon">📝</span>
+          View Logs
+        </a>
+      </div>
+      <div class="sidebar-footer">
+        <p>Version 1.0.0</p>
+      </div>
+    </nav>
 
-      <div class="card scan-card">
-        <h2><span class="step-number">2</span> Scan SBOM</h2>
-        <div class="options-group">
-          <label class="toggle-switch">
-            <input v-model="useAdvanced" type="checkbox">
-            <span class="toggle-slider"></span>
-            <span class="toggle-label">Use Advanced Analysis</span>
-          </label>
-          <button 
-            @click="scanSBOM" 
-            :disabled="isScanning || !sbomGenerated" 
-            class="primary-button"
-          >
-            <span v-if="isScanning" class="loader"></span>
-            {{ isScanning ? 'Scanning...' : 'Scan SBOM' }}
-          </button>
-        </div>
-        
-        <div v-if="!sbomGenerated && !scanError" class="empty-state">
-          <div class="empty-icon">🔍</div>
-          <p>Generate an SBOM first to enable scanning</p>
-        </div>
-        
-        <div v-if="scanError" class="alert error-message">
-          <div class="alert-header">
-            <span class="alert-icon">⚠️</span>
-            <h3>Scan Error</h3>
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="container">
+        <!-- Generate SBOM Card -->
+        <div class="card generate-card" id="generate">
+          <div class="card-header">
+            <span class="step-number">1</span>
+            <h2>Generate SBOM</h2>
           </div>
-          <pre>{{ scanError }}</pre>
-          
-          <div v-if="scanError.includes('ollama service is not available')" class="hint-box">
-            <h4>Troubleshooting Steps:</h4>
-            <ol>
-              <li>Ensure Ollama is running: <code>ollama serve</code></li>
-              <li>Install the required model: <code>ollama pull mistral</code></li>
-              <li>Restart the application</li>
-            </ol>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="sbomSource">Source (image, directory or git URL):</label>
+              <div class="input-group">
+                <input 
+                  v-model="sbomSource" 
+                  type="text" 
+                  id="sbomSource" 
+                  placeholder="e.g. node:latest or ./path/to/dir"
+                  class="modern-input"
+                >
+                <button 
+                  @click="generateSBOM" 
+                  :disabled="isGenerating" 
+                  class="primary-button"
+                >
+                  <span v-if="isGenerating" class="loader"></span>
+                  {{ isGenerating ? 'Generating...' : 'Generate' }}
+                </button>
+              </div>
+              <p class="hint">Enter a Docker image name, local directory path, or Git repository URL</p>
+            </div>
+            
+            <div v-if="errorMessage" class="alert error-message">
+              <div class="alert-header">
+                <span class="alert-icon">⚠️</span>
+                <h3>Error</h3>
+              </div>
+              <pre>{{ errorMessage }}</pre>
+            </div>
+            
+            <div v-if="sbomResult" class="result-section">
+              <div class="result-header">
+                <span class="success-icon">✅</span>
+                <h3>SBOM Generated Successfully</h3>
+              </div>
+              <div class="result-content">
+                <pre>{{ sbomResult }}</pre>
+              </div>
+            </div>
           </div>
         </div>
-        
-        <div v-if="remediationWarning" class="alert warning-message">
-          <div class="alert-header">
-            <span class="alert-icon">⚠️</span>
-            <h3>Warning</h3>
+
+        <!-- Analytics Section -->
+        <div class="card analytics-card" id="analytics">
+          <div class="card-header">
+            <span class="step-number">2</span>
+            <h2>Analytics</h2>
           </div>
-          <p>{{ remediationWarning }}</p>
-          <p>A basic remediation script has been generated instead.</p>
+          <div class="card-body">
+            <div v-if="!sbomGenerated" class="empty-state">
+              <div class="empty-icon">📊</div>
+              <p>Generate an SBOM first to view analytics</p>
+            </div>
+            
+            <div v-else>
+              <!-- Package Metrics Section -->
+              <div class="package-metrics-section">
+                <div class="section-header">
+                  <h3>Package Metrics</h3>
+                  <p class="section-description">Analyze popularity and maintenance metrics for packages in your SBOM</p>
+                </div>
+                <package-metrics :sbom-data="sbomData" />
+              </div>
+              
+              <div class="section-divider"></div>
+              
+              <!-- Other Analytics Components -->
+              <div class="section-header">
+                <h3>Additional Analytics</h3>
+              </div>
+              <div class="analytics-grid">
+                <vulnerability-trend :sbom-data="sbomData" />
+                <dependency-graph :sbom-data="sbomData" />
+                <license-compliance :sbom-data="sbomData" />
+              </div>
+            </div>
+          </div>
         </div>
-        
-        <div v-if="qualityScore" class="quality-score-section">
-          <div class="quality-header">
-            <span class="quality-icon">🏆</span>
-            <h3>SBOM Quality Score</h3>
+
+        <!-- Scan SBOM Card -->
+        <div class="card scan-card" id="scan">
+          <div class="card-header">
+            <span class="step-number">3</span>
+            <h2>Scan SBOM</h2>
           </div>
-          
-          <!-- Show appropriate content based on quality score state -->
-          <div v-if="qualityScoreError" class="quality-error-content">
-            <div class="error-icon">⚠️</div>
-            <div class="error-details">
-              <h4>Quality Score Unavailable</h4>
-              <p>{{ qualityScoreError }}</p>
-              <div class="install-instructions">
-                <p>To enable SBOM quality scoring, the sbomqs tool needs to be installed:</p>
-                <pre>wget -q https://github.com/interlynk-io/sbomqs/releases/download/v1.0.3/sbomqs-linux-amd64.tar.gz && \
+          <div class="card-body">
+            <div class="options-group">
+              <label class="toggle-switch">
+                <input v-model="useAdvanced" type="checkbox">
+                <span class="toggle-slider"></span>
+                <span class="toggle-label">Use Advanced Analysis</span>
+              </label>
+              <button 
+                @click="scanSBOM" 
+                :disabled="isScanning || !sbomGenerated" 
+                class="primary-button"
+              >
+                <span v-if="isScanning" class="loader"></span>
+                {{ isScanning ? 'Scanning...' : 'Scan SBOM' }}
+              </button>
+            </div>
+            
+            <div v-if="!sbomGenerated && !scanError" class="empty-state">
+              <div class="empty-icon">🔍</div>
+              <p>Generate an SBOM first to enable scanning</p>
+            </div>
+            
+            <div v-if="scanError" class="alert error-message">
+              <div class="alert-header">
+                <span class="alert-icon">⚠️</span>
+                <h3>Scan Error</h3>
+              </div>
+              <pre>{{ scanError }}</pre>
+              
+              <div v-if="scanError.includes('ollama service is not available')" class="hint-box">
+                <h4>Troubleshooting Steps:</h4>
+                <ol>
+                  <li>Ensure Ollama is running: <code>ollama serve</code></li>
+                  <li>Install the required model: <code>ollama pull mistral</code></li>
+                  <li>Restart the application</li>
+                </ol>
+              </div>
+            </div>
+            
+            <div v-if="remediationWarning" class="alert warning-message">
+              <div class="alert-header">
+                <span class="alert-icon">⚠️</span>
+                <h3>Warning</h3>
+              </div>
+              <p>{{ remediationWarning }}</p>
+              <p>A basic remediation script has been generated instead.</p>
+            </div>
+            
+            <div v-if="qualityScore" class="quality-score-section">
+              <div class="quality-header">
+                <span class="quality-icon">🏆</span>
+                <h3>SBOM Quality Score</h3>
+              </div>
+              
+              <div v-if="qualityScoreError" class="quality-error-content">
+                <div class="error-icon">⚠️</div>
+                <div class="error-details">
+                  <h4>Quality Score Unavailable</h4>
+                  <p>{{ qualityScoreError }}</p>
+                  <div class="install-instructions">
+                    <p>To enable SBOM quality scoring, the sbomqs tool needs to be installed:</p>
+                    <pre>wget -q https://github.com/interlynk-io/sbomqs/releases/download/v1.0.3/sbomqs-linux-amd64.tar.gz && \
 tar -xzf sbomqs-linux-amd64.tar.gz && \
 sudo mv sbomqs-linux-amd64/sbomqs /usr/local/bin/ && \
 sudo chmod +x /usr/local/bin/sbomqs</pre>
-                <a 
-                  href="https://github.com/interlynk-io/sbomqs" 
-                  target="_blank" 
-                  class="link-button"
-                >
-                  Learn More About sbomqs
-                </a>
-              </div>
-            </div>
-          </div>
-          
-          <div v-else class="quality-content">
-            <div class="score-circle" :style="scoreCircleStyle">
-              <span class="score-value">{{ formattedScore }}</span>
-              <span class="score-max">/10</span>
-            </div>
-            <div class="score-details">
-              <p class="score-label">
-                <span v-if="scoreValue >= 8">Excellent</span>
-                <span v-else-if="scoreValue >= 6">Good</span>
-                <span v-else-if="scoreValue >= 4">Average</span>
-                <span v-else>Needs Improvement</span>
-              </p>
-              <p class="score-description">This score measures SBOM completeness, accuracy, and compliance with standards.</p>
-              
-              <div v-if="hasCategories" class="categories-overview">
-                <h4>Category Scores:</h4>
-                <ul>
-                  <li v-for="(category, index) in extractCategories(qualityScore)" :key="index">
-                    {{ category.name }}: <span class="category-score" :class="getCategoryScoreClass(category.score)">{{ category.score.toFixed(1) }}/10</span>
-                  </li>
-                </ul>
+                    <a 
+                      href="https://github.com/interlynk-io/sbomqs" 
+                      target="_blank" 
+                      class="link-button"
+                    >
+                      Learn More About sbomqs
+                    </a>
+                  </div>
+                </div>
               </div>
               
-              <div class="improvement-suggestions">
-                <h4>Improvement Suggestions:</h4>
-                <ul v-if="hasImprovementSuggestions">
-                  <li v-for="(suggestion, index) in improvementSuggestions" :key="index">
-                    {{ suggestion }}
-                  </li>
-                </ul>
-                <p v-else class="no-suggestions">
-                  Generate detailed improvement suggestions by clicking "Show Details"
-                </p>
+              <div v-else class="quality-content">
+                <div class="score-circle" :style="scoreCircleStyle">
+                  <span class="score-value">{{ formattedScore }}</span>
+                  <span class="score-max">/10</span>
+                </div>
+                <div class="score-details">
+                  <p class="score-label">
+                    <span v-if="scoreValue >= 8">Excellent</span>
+                    <span v-else-if="scoreValue >= 6">Good</span>
+                    <span v-else-if="scoreValue >= 4">Average</span>
+                    <span v-else>Needs Improvement</span>
+                  </p>
+                  <p class="score-description">This score measures SBOM completeness, accuracy, and compliance with standards.</p>
+                  
+                  <div v-if="hasCategories" class="categories-overview">
+                    <h4>Category Scores:</h4>
+                    <ul>
+                      <li v-for="(category, index) in extractCategories(qualityScore)" :key="index">
+                        {{ category.name }}: <span class="category-score" :class="getCategoryScoreClass(category.score)">{{ category.score.toFixed(1) }}/10</span>
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div class="improvement-suggestions">
+                    <h4>Improvement Suggestions:</h4>
+                    <ul v-if="hasImprovementSuggestions">
+                      <li v-for="(suggestion, index) in improvementSuggestions" :key="index">
+                        {{ suggestion }}
+                      </li>
+                    </ul>
+                    <p v-else class="no-suggestions">
+                      Generate detailed improvement suggestions by clicking "Show Details"
+                    </p>
+                  </div>
+                  
+                  <div class="score-buttons">
+                    <button @click="toggleScoreDetails" class="secondary-button">
+                      {{ showScoreDetails ? 'Hide Details' : 'Show Details' }}
+                    </button>
+                    <a 
+                      href="https://github.com/interlynk-io/sbomqs" 
+                      target="_blank" 
+                      class="link-button"
+                    >
+                      Learn About SBOM Quality
+                    </a>
+                  </div>
+                </div>
               </div>
               
-              <div class="score-buttons">
-                <button @click="toggleScoreDetails" class="secondary-button">
-                  {{ showScoreDetails ? 'Hide Details' : 'Show Details' }}
-                </button>
-                <a 
-                  href="https://github.com/interlynk-io/sbomqs" 
-                  target="_blank" 
-                  class="link-button"
-                >
-                  Learn About SBOM Quality
-                </a>
+              <div v-if="showScoreDetails" class="score-details-expanded">
+                <div class="details-header">
+                  <h4>Detailed Quality Analysis</h4>
+                  <p class="details-description">
+                    Analysis powered by <a href="https://github.com/interlynk-io/sbomqs" target="_blank">sbomqs v1.0.3</a>
+                  </p>
+                </div>
+                <pre>{{ JSON.stringify(qualityScore, null, 2) }}</pre>
               </div>
             </div>
-          </div>
-          
-          <div v-if="showScoreDetails" class="score-details-expanded">
-            <div class="details-header">
-              <h4>Detailed Quality Analysis</h4>
-              <p class="details-description">
-                Analysis powered by <a href="https://github.com/interlynk-io/sbomqs" target="_blank">sbomqs v1.0.3</a>
-              </p>
-            </div>
-            <pre>{{ JSON.stringify(qualityScore, null, 2) }}</pre>
-          </div>
-        </div>
-        
-        <div v-if="scanResult" class="result-section">
-          <div class="result-header">
-            <span class="alert-icon">🔒</span>
-            <h3>Scan Results</h3>
-          </div>
-          <div class="result-content">
-            <pre>{{ scanResult }}</pre>
-          </div>
-          
-          <div v-if="remediationScript" class="remediation-section">
-            <div class="result-header">
-              <span class="success-icon">🛠️</span>
-              <h3>Remediation Script</h3>
-            </div>
-            <div class="result-content">
-              <pre>{{ remediationScript }}</pre>
-              <button @click="copyToClipboard(remediationScript)" class="copy-button">
-                Copy to Clipboard
-              </button>
+            
+            <div v-if="scanResult" class="result-section">
+              <div class="result-header">
+                <span class="alert-icon">🔒</span>
+                <h3>Scan Results</h3>
+              </div>
+              <div class="result-content">
+                <pre>{{ scanResult }}</pre>
+              </div>
+              
+              <div v-if="remediationScript" class="remediation-section">
+                <div class="result-header">
+                  <span class="success-icon">🛠️</span>
+                  <h3>Remediation Script</h3>
+                </div>
+                <div class="result-content">
+                  <pre>{{ remediationScript }}</pre>
+                  <button 
+                    @click="copyToClipboard(remediationScript, $event)" 
+                    class="copy-button">
+                    Copy to Clipboard
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    
-    <footer>
-      <p>SBOM Generator &copy; 2023</p>
-    </footer>
+    </main>
   </div>
 </template>
 
 <script setup>
 import { ref, onErrorCaptured, computed } from 'vue'
+import VulnerabilityTrend from './components/VulnerabilityTrend.vue'
+import PackageMetrics from './components/PackageMetrics.vue'
+import DependencyGraph from './components/DependencyGraph.vue'
+import LicenseCompliance from './components/LicenseCompliance.vue'
 
 const sbomSource = ref('')
 const isGenerating = ref(false)
@@ -481,206 +560,606 @@ async function scanSBOM() {
   }
 }
 
-function copyToClipboard(text) {
-  navigator.clipboard.writeText(text)
-    .then(() => {
-      const copyButton = document.querySelector('.copy-button')
-      copyButton.textContent = '✅ Copied!'
-      setTimeout(() => {
-        copyButton.textContent = 'Copy to Clipboard'
-      }, 2000)
-    })
-    .catch(err => {
-      console.error('Failed to copy text: ', err)
-    })
+function copyToClipboard(text, event) {
+  try {
+    if (!text) return;
+    
+    // Make a local copy of any variables needed to prevent reference errors
+    const textToCopy = String(text);
+    const currentEvent = event || null;
+    
+    navigator.clipboard.writeText(textToCopy)
+      .then(() => {
+        try {
+          // Use the event target directly to update the clicked button
+          if (currentEvent && currentEvent.target) {
+            const copyButton = currentEvent.target;
+            const originalText = copyButton.textContent || 'Copy to Clipboard';
+            copyButton.textContent = '✅ Copied!';
+            setTimeout(() => {
+              copyButton.textContent = originalText;
+            }, 2000);
+          }
+        } catch (buttonError) {
+          console.error('Error updating button text:', buttonError);
+        }
+      })
+      .catch(err => {
+        console.error('Failed to copy text: ', err);
+        
+        // Fallback for browsers without clipboard API
+        const textarea = document.createElement('textarea');
+        textarea.value = textToCopy;
+        textarea.style.position = 'fixed';
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        
+        try {
+          const successful = document.execCommand('copy');
+          if (successful && currentEvent && currentEvent.target) {
+            const copyButton = currentEvent.target;
+            const originalText = copyButton.textContent || 'Copy to Clipboard';
+            copyButton.textContent = '✅ Copied!';
+            setTimeout(() => {
+              copyButton.textContent = originalText;
+            }, 2000);
+          }
+        } catch (execError) {
+          console.error('Fallback copy failed:', execError);
+        }
+        
+        document.body.removeChild(textarea);
+      });
+  } catch (error) {
+    console.error('Error in copyToClipboard function:', error);
+  }
 }
+
+const sbomData = computed(() => {
+  if (!sbomResult.value) return null;
+  try {
+    return JSON.parse(sbomResult.value);
+  } catch (e) {
+    return null;
+  }
+});
 </script>
 
 <style>
 :root {
+  /* Modern Color Palette */
   --primary-color: #2563eb;
-  --primary-dark: #1d4ed8;
-  --success-color: #10b981;
-  --warning-color: #f59e0b;
-  --error-color: #ef4444;
-  --text-color: #1f2937;
-  --secondary-text: #4b5563;
-  --bg-color: #f3f4f6;
-  --card-bg: white;
-  --border-color: #e5e7eb;
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --primary-hover: #1d4ed8;
+  --secondary-color: #475569;
+  --success-color: #059669;
+  --danger-color: #dc2626;
+  --warning-color: #d97706;
+  --info-color: #2563eb;
+  --light-color: #f8fafc;
+  --dark-color: #0f172a;
+  --border-color: #e2e8f0;
+  --sidebar-width: 280px;
+  --header-height: 70px;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --transition-speed: 0.3s;
+  
+  /* Enhanced Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --line-height-normal: 1.6;
+  --line-height-tight: 1.3;
+  --letter-spacing-tight: -0.025em;
+  --letter-spacing-normal: 0;
 }
 
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  background-color: var(--bg-color);
-  font-family: 'Inter', 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--dark-color);
+  background-color: #f8fafc;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: var(--text-color);
-  line-height: 1.6;
 }
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  display: flex;
+  min-height: 100vh;
 }
 
-header {
-  margin-bottom: 2rem;
+/* Enhanced Sidebar Styles */
+.sidebar {
+  width: var(--sidebar-width);
+  background: linear-gradient(to bottom, var(--dark-color), #1e293b);
+  color: white;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+}
+
+.sidebar-header {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.sidebar-header h1 {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  margin-top: 0.75rem;
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: var(--line-height-tight);
+  background: linear-gradient(135deg, #ffffff, #cbd5e1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+}
+
+.sidebar-header .icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 0.5rem;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+}
+
+.nav-links {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+  transition: all 0.3s;
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-link:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 1.25rem;
+  width: 0;
+  height: 2px;
+  background-color: white;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  transform: translateX(4px);
+}
+
+.nav-link:hover:after {
+  width: calc(100% - 2.5rem);
+}
+
+.nav-link.active {
+  background: linear-gradient(135deg, var(--primary-color), #3b82f6);
+  color: white;
+  box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+}
+
+.nav-link.active:after {
+  width: 0;
+}
+
+.nav-icon {
+  margin-right: 1rem;
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover .nav-icon {
+  transform: translateY(-2px);
+}
+
+.sidebar-footer {
+  padding: 1.5rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.6);
   text-align: center;
 }
 
-h1 {
-  font-size: 2.5rem;
-  color: var(--primary-color);
-  margin-bottom: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.icon {
-  margin-right: 0.5rem;
+/* Enhanced Main Content Styles */
+.main-content {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  padding: 3rem;
 }
 
 .container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-  gap: 2rem;
-  margin-bottom: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
+/* Enhanced Card Styles */
 .card {
-  background-color: var(--card-bg);
-  border-radius: 0.75rem;
-  box-shadow: var(--shadow);
-  padding: 1.5rem;
-  transition: transform 0.2s, box-shadow 0.2s;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 8px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  margin-bottom: 2rem;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+  position: relative;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transform: translateY(-4px);
+  box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
 }
 
-h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
-  color: var(--primary-color);
+.card-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   align-items: center;
+  background: linear-gradient(to right, var(--light-color), white);
+}
+
+.card-header h2 {
+  margin: 0;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--dark-color);
+  letter-spacing: var(--letter-spacing-tight);
+  position: relative;
+}
+
+.card-header h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 40px;
+  height: 3px;
+  background-color: var(--primary-color);
+  border-radius: 2px;
 }
 
 .step-number {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
-  background-color: var(--primary-color);
-  color: white;
-  border-radius: 50%;
-  font-size: 1rem;
-  margin-right: 0.75rem;
+  margin-right: 1rem;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
+  box-shadow: 0 6px 12px -4px rgba(37, 99, 235, 0.3);
 }
 
+.card-body {
+  padding: 2rem;
+  position: relative;
+}
+
+/* Enhanced Form Styles */
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 label {
   display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
+  margin-bottom: 0.75rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--dark-color);
+  font-size: var(--font-size-lg);
+  position: relative;
+  transition: all 0.2s;
+}
+
+.modern-input {
+  width: 100%;
+  padding: 1.25rem 1.5rem;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  font-size: var(--font-size-base);
+  transition: all 0.3s;
+  font-family: var(--font-sans);
+  line-height: var(--line-height-normal);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  background-color: white;
+}
+
+.modern-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+  transform: translateY(-2px);
+}
+
+.modern-input::placeholder {
+  color: var(--secondary-color);
+  opacity: 0.7;
 }
 
 .input-group {
   display: flex;
-  gap: 0.5rem;
+  gap: 1.25rem;
+  position: relative;
 }
 
-input[type="text"] {
+.input-group input {
   flex: 1;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--border-color);
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  transition: border-color 0.2s;
 }
 
-input[type="text"]:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
-}
-
-.hint {
-  font-size: 0.875rem;
-  color: var(--secondary-text);
-  margin-top: 0.5rem;
-}
-
+/* Enhanced Button Styles */
 .primary-button {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  color: white;
+  border: none;
+  padding: 1.25rem 2rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: var(--font-weight-semibold);
+  transition: all 0.3s;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  min-width: 120px;
+  min-width: 160px;
+  font-size: var(--font-size-lg);
+  box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+  position: relative;
+  overflow: hidden;
 }
 
-.primary-button:hover:not(:disabled) {
-  background-color: var(--primary-dark);
+.primary-button:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
+  transform: translateX(-100%);
+}
+
+.primary-button:hover {
+  background: linear-gradient(135deg, var(--primary-hover), var(--primary-color));
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.4);
+}
+
+.primary-button:hover:before {
+  transform: translateX(100%);
+  transition: transform 0.8s ease;
+}
+
+.primary-button:active {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px -3px rgba(37, 99, 235, 0.5);
 }
 
 .primary-button:disabled {
-  background-color: #9ca3af;
+  background: linear-gradient(135deg, var(--secondary-color), #64748b);
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
   opacity: 0.7;
 }
 
 .secondary-button {
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-  color: var(--primary-color);
   background-color: white;
-  border: 1px solid var(--primary-color);
-  border-radius: 0.5rem;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  padding: 1rem 1.75rem;
+  border-radius: 12px;
   cursor: pointer;
-  transition: all 0.2s;
+  font-weight: var(--font-weight-semibold);
+  transition: all 0.3s;
+  font-size: var(--font-size-lg);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.secondary-button:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary-color);
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
 }
 
 .secondary-button:hover {
-  background-color: rgba(37, 99, 235, 0.1);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);
 }
 
-.options-group {
+.secondary-button:hover:before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Enhanced Alert Styles */
+.alert {
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  font-size: var(--font-size-base);
+  position: relative;
+  animation: slideIn 0.4s ease-out;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.error-message {
+  background-color: rgba(220, 38, 38, 0.05);
+  border-left: 4px solid var(--danger-color);
+}
+
+.warning-message {
+  background-color: rgba(217, 119, 6, 0.05);
+  border-left: 4px solid var(--warning-color);
+}
+
+.alert-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.75rem;
 }
 
-/* Toggle switch styling */
+.alert-icon {
+  margin-right: 0.75rem;
+  font-size: 1.5rem;
+  animation: pulseAlert 2s infinite;
+}
+
+/* Enhanced Result Section Styles */
+.result-section {
+  margin-top: 2rem;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.result-section:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  transform: translateY(-3px);
+}
+
+.result-header {
+  background: linear-gradient(to right, var(--light-color), white);
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+}
+
+.result-header h3 {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  margin-left: 1rem;
+  position: relative;
+}
+
+.result-content {
+  padding: 1.5rem;
+  position: relative;
+}
+
+.result-content pre {
+  background-color: var(--light-color);
+  padding: 1.5rem;
+  border-radius: 12px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-tight);
+  border: 1px solid var(--border-color);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Enhanced Quality Score Styles */
+.quality-score-section {
+  margin-top: 2rem;
+}
+
+.score-circle {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 2rem;
+  box-shadow: 0 8px 12px -1px rgba(0, 0, 0, 0.1);
+}
+
+.score-value {
+  font-size: 3.5rem;
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+
+.score-max {
+  font-size: var(--font-size-xl);
+  opacity: 0.8;
+  margin-top: 0.5rem;
+}
+
+.score-details {
+  text-align: center;
+}
+
+.score-label {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: 0.75rem;
+}
+
+.score-description {
+  color: var(--secondary-color);
+  margin-bottom: 1.5rem;
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-normal);
+}
+
+/* Enhanced Toggle Switch Styles */
 .toggle-switch {
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  cursor: pointer;
+  display: inline-block;
+  width: 60px;
+  height: 28px;
 }
 
 .toggle-switch input {
@@ -690,26 +1169,27 @@ input[type="text"]:focus {
 }
 
 .toggle-slider {
-  position: relative;
-  display: inline-block;
-  width: 50px;
-  height: 26px;
-  background-color: #ccc;
-  border-radius: 34px;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--secondary-color);
   transition: .4s;
-  margin-right: 10px;
+  border-radius: 28px;
 }
 
 .toggle-slider:before {
   position: absolute;
   content: "";
-  height: 18px;
-  width: 18px;
+  height: 20px;
+  width: 20px;
   left: 4px;
   bottom: 4px;
   background-color: white;
-  border-radius: 50%;
   transition: .4s;
+  border-radius: 50%;
 }
 
 input:checked + .toggle-slider {
@@ -717,405 +1197,370 @@ input:checked + .toggle-slider {
 }
 
 input:checked + .toggle-slider:before {
-  transform: translateX(24px);
+  transform: translateX(32px);
 }
 
 .toggle-label {
-  font-weight: 500;
+  margin-left: 1.25rem;
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-lg);
 }
 
+/* Enhanced Empty State Styles */
 .empty-state {
   text-align: center;
-  padding: 2rem;
-  color: var(--secondary-text);
+  padding: 4rem 2rem;
+  color: var(--secondary-color);
+  background: linear-gradient(to bottom, white, var(--light-color));
+  border-radius: 16px;
+  border: 1px dashed var(--border-color);
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.empty-state:hover {
+  border-color: var(--primary-color);
 }
 
 .empty-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+  font-size: 5rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.7;
 }
 
-.alert {
-  margin: 1.5rem 0;
-  border-radius: 0.5rem;
-  padding: 1rem;
+.empty-state p {
+  font-size: var(--font-size-lg);
+  max-width: 400px;
+  margin: 0 auto;
 }
 
-.error-message {
-  background-color: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.3);
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.1);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(37, 99, 235, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+  }
 }
 
-.warning-message {
-  background-color: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.3);
+/* Enhanced Responsive Design */
+@media (max-width: 1280px) {
+  .analytics-grid {
+    gap: 1.5rem;
+  }
 }
 
-.alert-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.5rem;
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 240px;
+    padding: 1.5rem 1rem;
+  }
+  
+  .main-content {
+    margin-left: 240px;
+    padding: 2rem;
+  }
+  
+  .analytics-grid > *:nth-child(1),
+  .analytics-grid > *:nth-child(2) {
+    grid-column: span 2;
+  }
 }
 
-.alert-icon, .success-icon, .quality-icon {
-  margin-right: 0.5rem;
-  font-size: 1.25rem;
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding: 1rem;
+  }
+  
+  .sidebar-header {
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  
+  .sidebar-header h1 {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .nav-links {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .nav-link {
+    padding: 0.75rem 1rem;
+    margin-bottom: 0;
+    font-size: var(--font-size-base);
+  }
+  
+  .nav-icon {
+    margin-right: 0.5rem;
+    font-size: 1.25rem;
+  }
+  
+  .sidebar-footer {
+    display: none;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 1.5rem;
+  }
+
+  .input-group {
+    flex-direction: column;
+  }
+
+  .primary-button {
+    width: 100%;
+  }
+  
+  .card-header {
+    padding: 1.5rem;
+  }
+  
+  .card-body {
+    padding: 1.5rem;
+  }
+  
+  .analytics-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .analytics-grid > * {
+    grid-column: span 1;
+  }
 }
 
-.result-section, .quality-score-section {
-  margin-top: 1.5rem;
+@media (max-width: 480px) {
+  .container {
+    padding: 0;
+  }
+  
+  .card {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-header {
+    padding: 1.25rem;
+  }
+  
+  .card-body {
+    padding: 1.25rem;
+  }
+  
+  .step-number {
+    width: 36px;
+    height: 36px;
+    font-size: var(--font-size-base);
+    margin-right: 0.75rem;
+  }
+  
+  .card-header h2 {
+    font-size: var(--font-size-xl);
+  }
 }
 
-.result-header, .quality-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0.75rem;
-}
-
-.result-content {
-  position: relative;
-}
-
-pre {
-  background-color: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  padding: 1rem;
-  overflow-x: auto;
-  font-family: 'Fira Mono', monospace;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-.remediation-section {
-  margin-top: 1.5rem;
-}
-
-.copy-button {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  background-color: white;
-  border: 1px solid var(--border-color);
-  border-radius: 0.25rem;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.75rem;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.copy-button:hover {
-  background-color: #f3f4f6;
-}
-
-.hint-box {
-  margin-top: 1rem;
-  background-color: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  padding: 1rem;
-}
-
-.hint-box h4 {
-  margin-bottom: 0.5rem;
-  color: var(--secondary-text);
-}
-
-.hint-box ol {
-  padding-left: 1.5rem;
-}
-
-.hint-box li {
-  margin-bottom: 0.5rem;
-}
-
-.hint-box code {
-  background-color: #e5e7eb;
-  padding: 0.15rem 0.3rem;
-  border-radius: 0.25rem;
-  font-family: monospace;
-  font-size: 0.875rem;
-}
-
-/* Quality Score Styling */
-.quality-content {
-  display: flex;
-  gap: 1.5rem;
-  align-items: flex-start;
-  background-color: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  padding: 1.5rem;
-}
-
-.score-circle {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: conic-gradient(#10b981 70%, #e5e7eb 70% 100%);
-  position: relative;
-  flex-shrink: 0;
-}
-
-.score-circle::before {
-  content: "";
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background-color: white;
-}
-
-.score-value {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: var(--text-color);
-  z-index: 1;
-}
-
-.score-max {
-  font-size: 0.875rem;
-  color: var(--secondary-text);
-  z-index: 1;
-  margin-top: -0.25rem;
-}
-
-.score-details {
-  flex: 1;
-}
-
-.score-label {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-}
-
-.score-description {
-  color: var(--secondary-text);
-  margin-bottom: 1rem;
-}
-
-.categories-overview {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
-.categories-overview h4 {
-  margin-bottom: 0.5rem;
-  font-size: 0.875rem;
-  color: var(--secondary-text);
-}
-
-.categories-overview ul {
-  list-style: none;
-}
-
-.categories-overview li {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.25rem;
-  font-size: 0.875rem;
-}
-
-.category-score {
-  font-weight: 600;
-}
-
-.score-details-expanded {
-  margin-top: 1rem;
-}
-
-/* Loading spinner */
-.loader {
-  width: 16px;
-  height: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  border-top-color: white;
-  animation: spin 1s linear infinite;
-  margin-right: 0.5rem;
-}
-
+/* Enhanced Animation */
 @keyframes spin {
   to {
     transform: rotate(360deg);
   }
 }
 
-footer {
-  text-align: center;
-  margin-top: 3rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--border-color);
-  color: var(--secondary-text);
-  font-size: 0.875rem;
+.loader {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+  margin-right: 0.75rem;
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .container {
-    grid-template-columns: 1fr;
-  }
-  
-  .input-group {
-    flex-direction: column;
-  }
-  
-  .options-group {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-  
-  .primary-button {
-    width: 100%;
-  }
-  
-  .quality-content {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .score-details {
-    text-align: center;
-  }
+/* Enhanced Typography Styles */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--dark-color);
+  letter-spacing: var(--letter-spacing-tight);
 }
 
-/* New styles for improved quality score display */
-.score-buttons {
-  display: flex;
-  gap: 0.75rem;
-  margin-top: 1rem;
+h1 { font-size: var(--font-size-4xl); }
+h2 { font-size: var(--font-size-3xl); }
+h3 { font-size: var(--font-size-2xl); }
+h4 { font-size: var(--font-size-xl); }
+h5 { font-size: var(--font-size-lg); }
+h6 { font-size: var(--font-size-base); }
+
+p {
+  margin-bottom: 1.25rem;
+  line-height: var(--line-height-normal);
+  font-size: var(--font-size-base);
 }
 
-.link-button {
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-  color: var(--secondary-text);
+pre, code {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-tight);
+}
+
+/* Enhanced Link Styles */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: all var(--transition-speed);
+  font-weight: var(--font-weight-medium);
+}
+
+a:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+/* Enhanced Copy Button Styles */
+.copy-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
   background-color: white;
-  border: 1px solid var(--border-color);
-  border-radius: 0.5rem;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  transition: all 0.2s;
-}
-
-.link-button:hover {
-  background-color: #f3f4f6;
-  color: var(--primary-color);
-}
-
-.details-header {
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem 1.25rem;
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: var(--font-weight-medium);
+  z-index: 10;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.5rem;
+  gap: 0.5rem;
 }
 
-.details-description {
-  font-size: 0.875rem;
-  color: var(--secondary-text);
+.copy-button:before {
+  content: '📋';
+  font-size: 1rem;
 }
 
-.details-description a {
-  color: var(--primary-color);
-  text-decoration: none;
+.copy-button:hover {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
 }
 
-.improvement-suggestions {
-  margin-top: 1rem;
+.copy-button:hover:before {
+  content: '✂️';
 }
 
-.improvement-suggestions h4 {
-  margin-bottom: 0.5rem;
-  font-size: 0.875rem;
-  color: var(--secondary-text);
+/* Enhanced Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.improvement-suggestions ul {
-  list-style: circle;
-  padding-left: 1.25rem;
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
-.improvement-suggestions li {
-  margin-bottom: 0.25rem;
-  font-size: 0.875rem;
+@keyframes pulseAlert {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
 }
 
-.no-suggestions {
-  font-size: 0.875rem;
-  color: var(--secondary-text);
-  font-style: italic;
-}
-
-/* Category score colors */
-.score-excellent {
-  color: var(--success-color);
-}
-
-.score-good {
-  color: var(--warning-color);
-}
-
-.score-average {
-  color: #f97316; /* Orange */
-}
-
-.score-poor {
-  color: var(--error-color);
-}
-
-/* Add styles for quality score error */
-.quality-error-content {
-  display: flex;
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
-  background-color: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  padding: 1.5rem;
+  margin-top: 1.5rem;
+  animation: fadeIn 0.6s ease-out;
 }
 
-.error-icon {
-  font-size: 2rem;
-  color: var(--warning-color);
+.analytics-grid > * {
+  grid-column: span 2;
+  transition: all 0.3s ease;
+  border-radius: 16px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
 }
 
-.error-details {
-  flex: 1;
+.analytics-grid > *:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-.error-details h4 {
-  font-size: 1.1rem;
+.analytics-grid > *:nth-child(1),
+.analytics-grid > *:nth-child(2) {
+  grid-column: span 1;
+}
+
+/* Package Metrics Section Styles */
+.package-metrics-section {
+  margin-bottom: 2rem;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.section-header {
+  margin-bottom: 1.5rem;
+}
+
+.section-header h3 {
+  font-size: var(--font-size-2xl);
   margin-bottom: 0.5rem;
-  color: var(--warning-color);
+  position: relative;
+  display: inline-block;
 }
 
-.error-details p {
-  margin-bottom: 1rem;
+.section-header h3::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 40px;
+  height: 3px;
+  background-color: var(--primary-color);
+  border-radius: 2px;
 }
 
-.install-instructions {
-  margin-top: 1rem;
-  padding: 1rem;
-  background-color: #f1f5f9;
-  border-radius: 0.5rem;
+.section-description {
+  color: var(--secondary-color);
+  font-size: var(--font-size-lg);
+  max-width: 800px;
 }
 
-.install-instructions pre {
-  background-color: #e2e8f0;
-  padding: 0.75rem;
-  margin: 0.75rem 0;
-  border-radius: 0.375rem;
-  font-size: 0.8rem;
-  overflow-x: auto;
+.section-divider {
+  height: 1px;
+  background: linear-gradient(to right, var(--border-color), transparent);
+  margin: 2rem 0;
+}
+
+/* Enhance Package Metrics component appearance */
+.package-metrics {
+  border-radius: 16px;
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.package-metrics:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 </style>
