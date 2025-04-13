@@ -461,3 +461,145 @@
 2025/04/13 10:14:52 2025/04/13 10:14:52 Calculating SBOM quality score for: sbom.cyclonedx.json
 2025/04/13 10:14:59 2025/04/13 10:14:59 Using Ollama model: mistral
 2025/04/13 10:15:04 2025/04/13 10:15:04 SBOM scan completed successfully.
+2025/04/13 10:44:45 2025/04/13 10:44:45 Processing SBOM for source: image:python
+2025/04/13 10:51:57 2025/04/13 10:51:57 Failed to get source: errors occurred attempting to resolve 'python':
+  - docker: docker not available: failed to connect to Docker daemon. Ensure Docker is running and accessible
+  - podman: podman not available: no host address
+  - containerd: containerd not available: no grpc connection or services is available: unavailable
+  - oci-registry: Get "https://index.docker.io/v2/library/python/blobs/sha256:002e18bd5659ca9d155e99922678788bec836a3ac4964d8a9567ce59e2154de9": Get "https://auth.docker.io/token?scope=repository%3Alibrary%2Fpython%3Apull&service=registry.docker.io": net/http: TLS handshake timeout
+  - additionally, the following providers failed with file does not exist: docker-archive, oci-archive, oci-dir, singularity, oci-dir
+2025/04/13 10:51:58 2025/04/13 10:51:58 Processing SBOM for source: image:python
+2025/04/13 10:52:29 2025/04/13 10:52:29 Failed to get source: errors occurred attempting to resolve 'python':
+  - docker: docker not available: failed to connect to Docker daemon. Ensure Docker is running and accessible
+  - podman: podman not available: no host address
+  - containerd: containerd not available: no grpc connection or services is available: unavailable
+  - oci-registry: failed to get image descriptor from registry: Get "https://index.docker.io/v2/": net/http: TLS handshake timeout
+  - additionally, the following providers failed with file does not exist: docker-archive, oci-archive, oci-dir, singularity, oci-dir
+2025/04/13 10:52:30 2025/04/13 10:52:30 Processing SBOM for source: image:python
+2025/04/13 10:52:56 2025/04/13 10:52:56 Processing SBOM for source: image:node
+2025/04/13 10:53:13 2025/04/13 10:53:13 SBOM generated successfully.
+2025/04/13 10:53:30 2025/04/13 10:53:30 Processing SBOM for source: image:node
+2025/04/13 10:53:32 2025/04/13 10:53:32 SBOM generated successfully.
+2025/04/13 10:54:02 2025/04/13 10:54:02 SBOM generated successfully.
+2025/04/13 10:58:09 2025/04/13 10:58:09 Processing SBOM for source: image:node
+2025/04/13 10:58:55 2025/04/13 10:58:55 Processing SBOM for source: image:node
+2025/04/13 10:58:57 2025/04/13 10:58:57 Failed to get source: errors occurred attempting to resolve 'node':
+  - docker: docker not available: failed to connect to Docker daemon. Ensure Docker is running and accessible
+  - podman: podman not available: no host address
+  - containerd: containerd not available: no grpc connection or services is available: unavailable
+  - oci-registry: unable to populate layer cache dir="/tmp/stereoscope-843618529/oci-registry-image-1332048061/sha256:e2098b491a3bcc7ee72249cdeb9b56e6a3bc1b652e0c50cedd9df6448c7578c8" : unexpected EOF
+  - additionally, the following providers failed with file does not exist: docker-archive, oci-archive, oci-dir, singularity, oci-dir
+2025/04/13 10:59:28 2025/04/13 10:59:28 SBOM generated successfully.
+2025/04/13 10:59:58 2025/04/13 10:59:58 Starting SBOM scan...
+2025/04/13 11:00:18 2025/04/13 11:00:18 Detected package type: package
+2025/04/13 11:00:18 2025/04/13 11:00:18 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/13 11:00:19 2025/04/13 11:00:19 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/13 11:00:26 2025/04/13 11:00:26 Using Ollama model: mistral
+2025/04/13 11:00:29 2025/04/13 11:00:29 SBOM scan completed successfully.
+2025/04/13 11:00:54 2025/04/13 11:00:54 Processing SBOM for source: image:python
+2025/04/13 11:01:22 2025/04/13 11:01:22 SBOM generated successfully.
+2025/04/13 11:03:01 2025/04/13 11:03:01 Processing SBOM for source: image:python
+2025/04/13 11:03:29 2025/04/13 11:03:29 SBOM generated successfully.
+2025/04/13 11:07:04 2025/04/13 11:07:04 Processing SBOM for source: image:python
+2025/04/13 11:07:32 2025/04/13 11:07:32 SBOM generated successfully.
+2025/04/13 11:09:32 2025/04/13 11:09:32 Processing SBOM for source: image:python
+2025/04/13 11:10:00 2025/04/13 11:10:00 SBOM generated successfully.
+2025/04/13 11:19:01 2025/04/13 11:19:01 Processing SBOM for source: image:python
+2025/04/13 11:19:31 2025/04/13 11:19:31 SBOM generated successfully.
+2025/04/13 11:31:30 2025/04/13 11:31:30 Processing SBOM for source: image:python
+2025/04/13 11:31:59 2025/04/13 11:31:59 SBOM generated successfully.
+2025/04/13 11:36:46 2025/04/13 11:36:46 Processing SBOM for source: image:node
+2025/04/13 11:37:21 2025/04/13 11:37:21 SBOM generated successfully.
+2025/04/13 11:40:15 2025/04/13 11:40:15 Processing SBOM for source: image:node
+2025/04/13 11:40:47 2025/04/13 11:40:47 SBOM generated successfully.
+2025/04/13 11:41:28 2025/04/13 11:41:28 Processing SBOM for source: image:node
+2025/04/13 11:42:04 2025/04/13 11:42:04 SBOM generated successfully.
+2025/04/13 11:44:15 2025/04/13 11:44:15 Starting SBOM scan...
+2025/04/13 11:44:17 2025/04/13 11:44:17 Detected package type: package
+2025/04/13 11:44:17 2025/04/13 11:44:17 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/13 11:44:19 2025/04/13 11:44:19 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/13 11:44:25 2025/04/13 11:44:25 Using Ollama model: mistral
+2025/04/13 11:44:28 2025/04/13 11:44:28 SBOM scan completed successfully.
+2025/04/13 11:44:51 2025/04/13 11:44:51 Processing SBOM for source: image:jenkin
+2025/04/13 11:44:53 2025/04/13 11:44:53 Failed to get source: errors occurred attempting to resolve 'jenkin':
+  - docker: docker not available: failed to connect to Docker daemon. Ensure Docker is running and accessible
+  - podman: podman not available: no host address
+  - containerd: containerd not available: no grpc connection or services is available: unavailable
+  - oci-registry: failed to get image descriptor from registry: GET https://index.docker.io/v2/library/jenkin/manifests/latest: UNAUTHORIZED: authentication required; [map[Action:pull Class: Name:library/jenkin Type:repository]]
+  - additionally, the following providers failed with file does not exist: docker-archive, oci-archive, oci-dir, singularity, oci-dir
+2025/04/13 11:44:54 2025/04/13 11:44:54 Processing SBOM for source: image:jenkin
+2025/04/13 11:44:56 2025/04/13 11:44:56 Failed to get source: errors occurred attempting to resolve 'jenkin':
+  - docker: docker not available: failed to connect to Docker daemon. Ensure Docker is running and accessible
+  - podman: podman not available: no host address
+  - containerd: containerd not available: no grpc connection or services is available: unavailable
+  - oci-registry: failed to get image descriptor from registry: GET https://index.docker.io/v2/library/jenkin/manifests/latest: UNAUTHORIZED: authentication required; [map[Action:pull Class: Name:library/jenkin Type:repository]]
+  - additionally, the following providers failed with file does not exist: docker-archive, oci-archive, oci-dir, singularity, oci-dir
+2025/04/13 11:44:57 2025/04/13 11:44:57 Processing SBOM for source: image:jenkin
+2025/04/13 11:45:00 2025/04/13 11:45:00 Failed to get source: errors occurred attempting to resolve 'jenkin':
+  - docker: docker not available: failed to connect to Docker daemon. Ensure Docker is running and accessible
+  - podman: podman not available: no host address
+  - containerd: containerd not available: no grpc connection or services is available: unavailable
+  - oci-registry: failed to get image descriptor from registry: GET https://index.docker.io/v2/library/jenkin/manifests/latest: UNAUTHORIZED: authentication required; [map[Action:pull Class: Name:library/jenkin Type:repository]]
+  - additionally, the following providers failed with file does not exist: docker-archive, oci-archive, oci-dir, singularity, oci-dir
+2025/04/13 11:45:02 2025/04/13 11:45:02 Processing SBOM for source: image:jenkin
+2025/04/13 11:45:05 2025/04/13 11:45:05 Failed to get source: errors occurred attempting to resolve 'jenkin':
+  - docker: docker not available: failed to connect to Docker daemon. Ensure Docker is running and accessible
+  - podman: podman not available: no host address
+  - containerd: containerd not available: no grpc connection or services is available: unavailable
+  - oci-registry: failed to get image descriptor from registry: GET https://index.docker.io/v2/library/jenkin/manifests/latest: UNAUTHORIZED: authentication required; [map[Action:pull Class: Name:library/jenkin Type:repository]]
+  - additionally, the following providers failed with file does not exist: docker-archive, oci-archive, oci-dir, singularity, oci-dir
+2025/04/13 11:45:43 2025/04/13 11:45:43 Processing SBOM for source: image:jenkins
+2025/04/13 11:45:45 2025/04/13 11:45:45 Failed to get source: errors occurred attempting to resolve 'jenkins':
+  - docker: docker not available: failed to connect to Docker daemon. Ensure Docker is running and accessible
+  - podman: podman not available: no host address
+  - containerd: containerd not available: no grpc connection or services is available: unavailable
+  - oci-registry: failed to get image descriptor from registry: GET https://index.docker.io/v2/library/jenkins/manifests/latest: MANIFEST_UNKNOWN: manifest unknown; unknown tag=latest
+  - additionally, the following providers failed with file does not exist: docker-archive, oci-archive, oci-dir, singularity, oci-dir
+2025/04/13 11:45:46 2025/04/13 11:45:46 Processing SBOM for source: image:jenkins
+2025/04/13 11:45:47 2025/04/13 11:45:47 Failed to get source: errors occurred attempting to resolve 'jenkins':
+  - docker: docker not available: failed to connect to Docker daemon. Ensure Docker is running and accessible
+  - podman: podman not available: no host address
+  - containerd: containerd not available: no grpc connection or services is available: unavailable
+  - oci-registry: failed to get image descriptor from registry: GET https://index.docker.io/v2/library/jenkins/manifests/latest: MANIFEST_UNKNOWN: manifest unknown; unknown tag=latest
+  - additionally, the following providers failed with file does not exist: docker-archive, oci-archive, oci-dir, singularity, oci-dir
+2025/04/13 11:45:48 2025/04/13 11:45:48 Processing SBOM for source: image:jenkins
+2025/04/13 11:45:50 2025/04/13 11:45:50 Failed to get source: errors occurred attempting to resolve 'jenkins':
+  - docker: docker not available: failed to connect to Docker daemon. Ensure Docker is running and accessible
+  - podman: podman not available: no host address
+  - containerd: containerd not available: no grpc connection or services is available: unavailable
+  - oci-registry: failed to get image descriptor from registry: GET https://index.docker.io/v2/library/jenkins/manifests/latest: MANIFEST_UNKNOWN: manifest unknown; unknown tag=latest
+  - additionally, the following providers failed with file does not exist: docker-archive, oci-archive, oci-dir, singularity, oci-dir
+2025/04/13 11:45:52 2025/04/13 11:45:52 Processing SBOM for source: image:jenkins
+2025/04/13 11:45:54 2025/04/13 11:45:54 Failed to get source: errors occurred attempting to resolve 'jenkins':
+  - docker: docker not available: failed to connect to Docker daemon. Ensure Docker is running and accessible
+  - podman: podman not available: no host address
+  - containerd: containerd not available: no grpc connection or services is available: unavailable
+  - oci-registry: failed to get image descriptor from registry: GET https://index.docker.io/v2/library/jenkins/manifests/latest: MANIFEST_UNKNOWN: manifest unknown; unknown tag=latest
+  - additionally, the following providers failed with file does not exist: docker-archive, oci-archive, oci-dir, singularity, oci-dir
+2025/04/13 11:47:02 2025/04/13 11:47:02 Processing SBOM for source: image:jenkins/jenkins
+2025/04/13 11:47:28 2025/04/13 11:47:28 SBOM generated successfully.
+2025/04/13 11:47:54 2025/04/13 11:47:54 Starting SBOM scan...
+2025/04/13 11:47:55 2025/04/13 11:47:55 Detected package type: Go package
+2025/04/13 11:47:55 2025/04/13 11:47:55 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/13 11:47:56 2025/04/13 11:47:56 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/13 11:48:02 2025/04/13 11:48:02 Using Ollama model: mistral
+2025/04/13 11:48:12 2025/04/13 11:48:12 SBOM scan completed successfully.
+2025/04/13 11:53:46 2025/04/13 11:53:46 Processing SBOM for source: image:jenkins/jenkins
+2025/04/13 11:54:11 2025/04/13 11:54:11 SBOM generated successfully.
+2025/04/13 11:54:33 2025/04/13 11:54:33 Processing SBOM for source: image:jenkins/jenkins
+2025/04/13 11:54:57 2025/04/13 11:54:57 SBOM generated successfully.
+2025/04/13 12:01:16 2025/04/13 12:01:16 Processing SBOM for source: image:jenkins/jenkins
+2025/04/13 12:01:41 2025/04/13 12:01:41 SBOM generated successfully.
+2025/04/13 12:01:47 2025/04/13 12:01:47 Starting SBOM scan...
+2025/04/13 12:01:48 2025/04/13 12:01:48 Detected package type: Go package
+2025/04/13 12:01:48 2025/04/13 12:01:48 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/13 12:01:49 2025/04/13 12:01:49 advanced analysis failed, falling back to basic: failed to call LlamaIndex API: Post "http://llama-index-service:8000/query": dial tcp: lookup llama-index-service on 127.0.0.11:53: no such host
+2025/04/13 12:01:54 2025/04/13 12:01:54 Using Ollama model: mistral
+2025/04/13 12:02:04 2025/04/13 12:02:04 SBOM scan completed successfully.
+2025/04/13 12:07:20 2025/04/13 12:07:20 Processing SBOM for source: image:python
+2025/04/13 12:07:50 2025/04/13 12:07:50 SBOM generated successfully.
+2025/04/13 12:08:18 2025/04/13 12:08:18 Starting SBOM scan...
+2025/04/13 12:08:20 2025/04/13 12:08:20 Detected package type: Python package
+2025/04/13 12:08:20 2025/04/13 12:08:20 Calculating SBOM quality score for: sbom.cyclonedx.json
+2025/04/13 12:08:29 2025/04/13 12:08:29 Using Ollama model: mistral
+2025/04/13 12:08:34 2025/04/13 12:08:34 SBOM scan completed successfully.

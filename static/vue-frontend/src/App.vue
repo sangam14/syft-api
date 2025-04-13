@@ -252,8 +252,18 @@ sudo chmod +x /usr/local/bin/sbomqs</pre>
                 <span class="alert-icon">🔒</span>
                 <h3>Scan Results</h3>
               </div>
-              <div class="result-content">
-                <pre>{{ scanResult }}</pre>
+              <div class="terminal-container">
+                <div class="terminal-header">
+                  <div class="terminal-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                  </div>
+                  <div class="terminal-title">sbom-scan-results.log</div>
+                </div>
+                <div class="terminal-content">
+                  <pre><code>{{ scanResult }}</code></pre>
+                </div>
               </div>
 
               <div v-if="remediationScript" class="remediation-section">
@@ -261,8 +271,18 @@ sudo chmod +x /usr/local/bin/sbomqs</pre>
                   <span class="success-icon">🛠️</span>
                   <h3>Remediation Script</h3>
                 </div>
-                <div class="result-content">
-                  <pre>{{ remediationScript }}</pre>
+                <div class="terminal-container">
+                  <div class="terminal-header">
+                    <div class="terminal-dots">
+                      <span class="dot red"></span>
+                      <span class="dot yellow"></span>
+                      <span class="dot green"></span>
+                    </div>
+                    <div class="terminal-title">remediation-script.sh</div>
+                  </div>
+                  <div class="terminal-content">
+                    <pre><code>{{ remediationScript }}</code></pre>
+                  </div>
                   <button
                     @click="copyToClipboard(remediationScript, $event)"
                     class="copy-button">
@@ -1330,6 +1350,16 @@ input:checked + .toggle-slider:before {
   .generate-card {
      grid-column: span 2; /* Example: Make generate card wider */
   }
+  
+  /* Make analytics card also span both columns like generate card */
+  .analytics-card {
+     grid-column: span 2; /* Make analytics card wider to match generate card */
+  }
+  
+  /* Make scan card also span both columns for consistency */
+  .scan-card {
+     grid-column: span 2; /* Make scan card wider to match other cards */
+  }
 
   /* Adjust analytics grid items if the container is now 2 columns */
    .analytics-grid {
@@ -1651,11 +1681,494 @@ a:hover {
   box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: all 0.3s ease;
-  background: white;
+  background: linear-gradient(to bottom right, #ffffff, #f8fafc);
+  border: 1px solid var(--border-color);
+  position: relative;
 }
 
 .package-metrics:hover {
   transform: translateY(-5px);
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-color: var(--primary-color);
+}
+
+/* Enhanced metrics header */
+.metrics-header {
+  background: linear-gradient(to right, var(--light-color), white);
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.metrics-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.metrics-title h3 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--dark-color);
+  margin-right: 1rem;
+  position: relative;
+}
+
+.metrics-title h3::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 40px;
+  height: 3px;
+  background-color: var(--primary-color);
+  border-radius: 2px;
+}
+
+.package-count {
+  background: linear-gradient(to right, var(--primary-color), var(--primary-hover));
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  box-shadow: 0 4px 6px -1px rgba(13, 148, 136, 0.2);
+}
+
+/* Enhanced metrics filters */
+.metrics-filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  background-color: rgba(241, 245, 249, 0.5);
+  padding: 1.25rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.filter-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.filter-group .modern-input {
+  background: white;
+  border: 1px solid var(--border-color);
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  font-size: var(--font-size-base);
+  transition: all 0.2s ease;
+  width: 220px;
+}
+
+.filter-group .modern-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+}
+
+/* Enhanced range selector */
+.range-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  position: relative;
+  background: white;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.range-selector label {
+  font-size: var(--font-size-sm);
+  color: var(--secondary-color);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.range-inputs {
+  display: flex;
+  align-items: center;
+}
+
+.range-input {
+  width: 70px;
+  text-align: center;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-weight: var(--font-weight-medium);
+}
+
+.range-info {
+  font-size: var(--font-size-sm);
+  color: var(--primary-color);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  margin-left: 0.25rem;
+}
+
+.range-controls {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.5rem;
+}
+
+.range-button {
+  background: linear-gradient(to bottom, #ffffff, #f1f5f9);
+  border: 1px solid var(--border-color);
+  color: var(--dark-color);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  font-size: var(--font-size-sm);
+  transition: all 0.2s ease;
+}
+
+.range-button:first-child {
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-bottom: none;
+}
+
+.range-button:last-child {
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.range-button:hover:not(:disabled) {
+  background: linear-gradient(to bottom, var(--primary-color), var(--primary-hover));
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.range-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Enhanced metrics content */
+.metrics-content {
+  padding: 2rem;
+}
+
+/* Enhanced package summary */
+.package-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  background: linear-gradient(to right, rgba(241, 245, 249, 0.8), rgba(248, 250, 252, 0.8));
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.25rem;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+.summary-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary-color);
+}
+
+.summary-label {
+  font-size: var(--font-size-sm);
+  color: var(--secondary-color);
+  margin-bottom: 0.75rem;
+  font-weight: var(--font-weight-medium);
+}
+
+.summary-value {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--dark-color);
+  position: relative;
+}
+
+.summary-value::after {
+  content: '';
+  position: absolute;
+  height: 3px;
+  width: 30px;
+  background-color: var(--primary-color);
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.summary-value.excellent {
+  color: var(--success-color);
+}
+
+.summary-value.good {
+  color: var(--primary-color);
+}
+
+.summary-value.fair {
+  color: var(--warning-color);
+}
+
+.summary-value.poor {
+  color: var(--danger-color);
+}
+
+/* Enhanced metrics grid */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.metric-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.2s ease;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--primary-color), var(--primary-hover));
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
+}
+
+.metric-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary-color);
+}
+
+.metric-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+}
+
+.metric-header h4 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--dark-color);
+  margin: 0;
+  max-width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metric-badge {
+  padding: 0.375rem 0.75rem;
+  border-radius: 20px;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.metric-badge.excellent {
+  background: linear-gradient(to right, rgba(16, 185, 129, 0.8), rgba(5, 150, 105, 0.8));
+  color: white;
+}
+
+.metric-badge.good {
+  background: linear-gradient(to right, rgba(37, 99, 235, 0.8), rgba(30, 64, 175, 0.8));
+  color: white;
+}
+
+.metric-badge.fair {
+  background: linear-gradient(to right, rgba(245, 158, 11, 0.8), rgba(217, 119, 6, 0.8));
+  color: white;
+}
+
+.metric-badge.poor {
+  background: linear-gradient(to right, rgba(220, 38, 38, 0.8), rgba(185, 28, 28, 0.8));
+  color: white;
+}
+
+.metric-details {
+  margin-bottom: 1.5rem;
+}
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px dotted rgba(226, 232, 240, 0.7);
+}
+
+.metric-label {
+  color: var(--secondary-color);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.metric-value {
+  font-weight: var(--font-weight-semibold);
+  color: var(--dark-color);
+}
+
+.metric-progress {
+  margin-top: 1.5rem;
+}
+
+.progress-bar {
+  height: 8px;
+  background: var(--light-color);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.progress-fill.excellent {
+  background: linear-gradient(to right, rgb(16, 185, 129), rgb(5, 150, 105));
+}
+
+.progress-fill.good {
+  background: linear-gradient(to right, rgb(37, 99, 235), rgb(30, 64, 175));
+}
+
+.progress-fill.fair {
+  background: linear-gradient(to right, rgb(245, 158, 11), rgb(217, 119, 6));
+}
+
+.progress-fill.poor {
+  background: linear-gradient(to right, rgb(220, 38, 38), rgb(185, 28, 28));
+}
+
+.progress-label {
+  font-size: var(--font-size-xs);
+  color: var(--secondary-color);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Terminal style for SBOM results */
+.terminal-container {
+  background-color: #2d3748;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  margin-bottom: 1.5rem;
+}
+
+.terminal-header {
+  background-color: #1a202c;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #4a5568;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+  margin-right: 16px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.dot.red {
+  background-color: #f56565;
+}
+
+.dot.yellow {
+  background-color: #ecc94b;
+}
+
+.dot.green {
+  background-color: #48bb78;
+}
+
+.terminal-title {
+  color: #a0aec0;
+  font-size: 14px;
+  font-family: monospace;
+}
+
+.terminal-content {
+  padding: 16px;
+  color: #f7fafc;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-x: auto;
+}
+
+.terminal-content pre {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.terminal-content code {
+  color: #f7fafc;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', monospace;
+}
+
+/* Highlight different parts of the terminal output */
+.terminal-content ::v-deep .vulnerability-high {
+  color: #fc8181;
+  font-weight: bold;
+}
+
+.terminal-content ::v-deep .vulnerability-medium {
+  color: #f6ad55;
+  font-weight: bold;
+}
+
+.terminal-content ::v-deep .vulnerability-low {
+  color: #f6e05e;
+  font-weight: bold;
+}
+
+.terminal-content ::v-deep .command {
+  color: #63b3ed;
+}
+
+.terminal-content ::v-deep .success {
+  color: #68d391;
 }
 </style>

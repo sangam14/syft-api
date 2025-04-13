@@ -137,11 +137,13 @@
             </div>
           </div>
 
-          <!-- Vulnerability Trend -->
-          <vulnerability-trend v-if="hasValidData" :sbom-data="parsedSbomData" />
-          <div v-else class="component-loading">
-            <div class="loading-spinner"></div>
-            <p>Loading vulnerability trend data...</p>
+          <!-- Vulnerability Trend with landscape orientation -->
+          <div class="analytics-card vulnerability-trend landscape-card">
+            <vulnerability-trend v-if="hasValidData" :sbom-data="parsedSbomData" />
+            <div v-else class="component-loading">
+              <div class="loading-spinner"></div>
+              <p>Loading vulnerability trend data...</p>
+            </div>
           </div>
         </div>
 
@@ -152,13 +154,6 @@
           <div v-else class="component-loading">
             <div class="loading-spinner"></div>
             <p>Loading license compliance data...</p>
-          </div>
-
-          <!-- Dependency Graph -->
-          <dependency-graph v-if="hasValidData" :sbom-data="parsedSbomData" />
-          <div v-else class="component-loading">
-            <div class="loading-spinner"></div>
-            <p>Loading dependency graph data...</p>
           </div>
         </div>
       </div>
@@ -177,30 +172,6 @@
           <p>Loading package metrics...</p>
         </div>
       </div>
-
-      <!-- Recommendations Section -->
-      <div class="recommendations-section">
-        <div class="section-header">
-          <h3>Recommendations</h3>
-          <p class="section-description">Actionable insights to improve your SBOM health</p>
-        </div>
-        <div class="recommendations-grid">
-          <div v-for="(recommendation, index) in recommendations" :key="index" class="recommendation-card">
-            <div class="recommendation-header" :class="recommendation.priority">
-              <div class="recommendation-icon">{{ recommendation.icon }}</div>
-              <div class="recommendation-priority">{{ recommendation.priority }}</div>
-            </div>
-            <div class="recommendation-content">
-              <h4>{{ recommendation.title }}</h4>
-              <p>{{ recommendation.description }}</p>
-            </div>
-            <div class="recommendation-actions">
-              <button class="action-button">Implement</button>
-              <button class="action-button secondary">Dismiss</button>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -209,7 +180,6 @@
 import { ref, computed, onMounted } from 'vue';
 import VulnerabilityTrend from './VulnerabilityTrend.vue';
 import PackageMetrics from './PackageMetrics.vue';
-import DependencyGraph from './DependencyGraph.vue';
 import LicenseCompliance from './LicenseCompliance.vue';
 
 export default {
@@ -217,7 +187,6 @@ export default {
   components: {
     VulnerabilityTrend,
     PackageMetrics,
-    DependencyGraph,
     LicenseCompliance
   },
   props: {
@@ -358,34 +327,6 @@ export default {
       return Math.floor(Math.random() * 35) + 60;
     });
 
-    // Recommendations
-    const recommendations = ref([
-      {
-        icon: '⚠️',
-        priority: 'high',
-        title: 'Update 3 Critical Packages',
-        description: 'Three packages have critical vulnerabilities that should be addressed immediately.'
-      },
-      {
-        icon: '📜',
-        priority: 'medium',
-        title: 'License Compliance Issues',
-        description: 'Two packages have licenses that may conflict with your project\'s license.'
-      },
-      {
-        icon: '🔄',
-        priority: 'medium',
-        title: 'Outdated Dependencies',
-        description: '8 packages are significantly outdated and should be updated.'
-      },
-      {
-        icon: '📦',
-        priority: 'low',
-        title: 'Duplicate Dependencies',
-        description: 'Your project contains 3 duplicate dependencies that could be consolidated.'
-      }
-    ]);
-
     // Methods
     function refreshData() {
       isLoading.value = true;
@@ -440,7 +381,6 @@ export default {
       licensesTrend,
       healthTrend,
       vulnerabilitySeverity,
-      recommendations,
       refreshData,
       navigateToGenerate,
       exportVulnerabilityData
@@ -839,99 +779,6 @@ export default {
   color: var(--secondary-color);
 }
 
-/* Recommendations Section */
-.recommendations-section {
-  margin-top: 2rem;
-}
-
-.recommendations-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-}
-
-.recommendation-card {
-  background-color: white;
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.recommendation-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.recommendation-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.recommendation-header.high {
-  background-color: rgba(220, 38, 38, 0.1);
-}
-
-.recommendation-header.medium {
-  background-color: rgba(245, 158, 11, 0.1);
-}
-
-.recommendation-header.low {
-  background-color: rgba(16, 185, 129, 0.1);
-}
-
-.recommendation-icon {
-  font-size: 1.25rem;
-}
-
-.recommendation-priority {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  padding: 0.25rem 0.5rem;
-  border-radius: 9999px;
-  background-color: white;
-}
-
-.recommendation-header.high .recommendation-priority {
-  color: rgb(220, 38, 38);
-}
-
-.recommendation-header.medium .recommendation-priority {
-  color: rgb(245, 158, 11);
-}
-
-.recommendation-header.low .recommendation-priority {
-  color: rgb(16, 185, 129);
-}
-
-.recommendation-content {
-  padding: 1.5rem;
-}
-
-.recommendation-content h4 {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--dark-color);
-  margin-top: 0;
-  margin-bottom: 0.5rem;
-}
-
-.recommendation-content p {
-  font-size: 0.875rem;
-  color: var(--secondary-color);
-  margin: 0;
-}
-
-.recommendation-actions {
-  display: flex;
-  gap: 0.5rem;
-  padding: 0 1.5rem 1.5rem;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .analytics-header {
@@ -965,10 +812,6 @@ export default {
   .metrics-summary {
     grid-template-columns: 1fr;
   }
-
-  .recommendations-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (min-width: 769px) and (max-width: 1200px) {
@@ -981,6 +824,39 @@ export default {
   .analytics-view {
     max-width: 1400px;
     margin: 0 auto;
+  }
+}
+
+/* Vulnerability Trend Landscape */
+.vulnerability-trend.landscape-card {
+  min-height: 300px;
+  width: 100%;
+}
+
+@media (min-width: 1200px) {
+  .vulnerability-trend.landscape-card {
+    min-height: 350px;
+  }
+}
+
+.analytics-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  gap: 1.5rem;
+}
+
+@media (min-width: 1400px) {
+  .analytics-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .analytics-column {
+    width: 100%;
+  }
+  
+  .vulnerability-trend.landscape-card {
+    width: 100%;
+    min-height: 400px;
   }
 }
 </style>
