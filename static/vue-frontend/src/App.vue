@@ -42,16 +42,16 @@
             <div class="form-group">
               <label for="sbomSource">Source (image, directory or git URL):</label>
               <div class="input-group">
-                <input 
-                  v-model="sbomSource" 
-                  type="text" 
-                  id="sbomSource" 
+                <input
+                  v-model="sbomSource"
+                  type="text"
+                  id="sbomSource"
                   placeholder="e.g. node:latest or ./path/to/dir"
                   class="modern-input"
                 >
-                <button 
-                  @click="generateSBOM" 
-                  :disabled="isGenerating" 
+                <button
+                  @click="generateSBOM"
+                  :disabled="isGenerating"
                   class="primary-button"
                 >
                   <span v-if="isGenerating" class="loader"></span>
@@ -60,7 +60,7 @@
               </div>
               <p class="hint">Enter a Docker image name, local directory path, or Git repository URL</p>
             </div>
-            
+
             <div v-if="errorMessage" class="alert error-message">
               <div class="alert-header">
                 <span class="alert-icon">⚠️</span>
@@ -68,7 +68,7 @@
               </div>
               <pre>{{ errorMessage }}</pre>
             </div>
-            
+
             <div v-if="sbomResult" class="result-section">
               <div class="result-header">
                 <span class="success-icon">✅</span>
@@ -92,28 +92,14 @@
               <div class="empty-icon">📊</div>
               <p>Generate an SBOM first to view analytics</p>
             </div>
-            
+
             <div v-else>
-              <!-- Package Metrics Section -->
-              <div class="package-metrics-section">
-                <div class="section-header">
-                  <h3>Package Metrics</h3>
-                  <p class="section-description">Analyze popularity and maintenance metrics for packages in your SBOM</p>
-                </div>
-                <package-metrics :sbom-data="sbomData" />
-              </div>
-              
-              <div class="section-divider"></div>
-              
-              <!-- Other Analytics Components -->
-              <div class="section-header">
-                <h3>Additional Analytics</h3>
-              </div>
-              <div class="analytics-grid">
-                <vulnerability-trend :sbom-data="sbomData" />
-                <dependency-graph :sbom-data="sbomData" />
-                <license-compliance :sbom-data="sbomData" />
-              </div>
+              <!-- Full Analytics Dashboard -->
+
+              <analytics-view
+                :sbom-data="sbomData"
+                @navigate="handleNavigation"
+              />
             </div>
           </div>
         </div>
@@ -131,28 +117,28 @@
                 <span class="toggle-slider"></span>
                 <span class="toggle-label">Use Advanced Analysis</span>
               </label>
-              <button 
-                @click="scanSBOM" 
-                :disabled="isScanning || !sbomGenerated" 
+              <button
+                @click="scanSBOM"
+                :disabled="isScanning || !sbomGenerated"
                 class="primary-button"
               >
                 <span v-if="isScanning" class="loader"></span>
                 {{ isScanning ? 'Scanning...' : 'Scan SBOM' }}
               </button>
             </div>
-            
+
             <div v-if="!sbomGenerated && !scanError" class="empty-state">
               <div class="empty-icon">🔍</div>
               <p>Generate an SBOM first to enable scanning</p>
             </div>
-            
+
             <div v-if="scanError" class="alert error-message">
               <div class="alert-header">
                 <span class="alert-icon">⚠️</span>
                 <h3>Scan Error</h3>
               </div>
               <pre>{{ scanError }}</pre>
-              
+
               <div v-if="scanError.includes('ollama service is not available')" class="hint-box">
                 <h4>Troubleshooting Steps:</h4>
                 <ol>
@@ -162,7 +148,7 @@
                 </ol>
               </div>
             </div>
-            
+
             <div v-if="remediationWarning" class="alert warning-message">
               <div class="alert-header">
                 <span class="alert-icon">⚠️</span>
@@ -171,13 +157,13 @@
               <p>{{ remediationWarning }}</p>
               <p>A basic remediation script has been generated instead.</p>
             </div>
-            
+
             <div v-if="qualityScore" class="quality-score-section">
               <div class="quality-header">
                 <span class="quality-icon">🏆</span>
                 <h3>SBOM Quality Score</h3>
               </div>
-              
+
               <div v-if="qualityScoreError" class="quality-error-content">
                 <div class="error-icon">⚠️</div>
                 <div class="error-details">
@@ -189,9 +175,9 @@
 tar -xzf sbomqs-linux-amd64.tar.gz && \
 sudo mv sbomqs-linux-amd64/sbomqs /usr/local/bin/ && \
 sudo chmod +x /usr/local/bin/sbomqs</pre>
-                    <a 
-                      href="https://github.com/interlynk-io/sbomqs" 
-                      target="_blank" 
+                    <a
+                      href="https://github.com/interlynk-io/sbomqs"
+                      target="_blank"
                       class="link-button"
                     >
                       Learn More About sbomqs
@@ -199,7 +185,7 @@ sudo chmod +x /usr/local/bin/sbomqs</pre>
                   </div>
                 </div>
               </div>
-              
+
               <div v-else class="quality-content">
                 <div class="score-circle" :style="scoreCircleStyle">
                   <span class="score-value">{{ formattedScore }}</span>
@@ -213,7 +199,7 @@ sudo chmod +x /usr/local/bin/sbomqs</pre>
                     <span v-else>Needs Improvement</span>
                   </p>
                   <p class="score-description">This score measures SBOM completeness, accuracy, and compliance with standards.</p>
-                  
+
                   <div v-if="hasCategories" class="categories-overview">
                     <h4>Category Scores:</h4>
                     <ul>
@@ -222,7 +208,7 @@ sudo chmod +x /usr/local/bin/sbomqs</pre>
                       </li>
                     </ul>
                   </div>
-                  
+
                   <div class="improvement-suggestions">
                     <h4>Improvement Suggestions:</h4>
                     <ul v-if="hasImprovementSuggestions">
@@ -234,14 +220,14 @@ sudo chmod +x /usr/local/bin/sbomqs</pre>
                       Generate detailed improvement suggestions by clicking "Show Details"
                     </p>
                   </div>
-                  
+
                   <div class="score-buttons">
                     <button @click="toggleScoreDetails" class="secondary-button">
                       {{ showScoreDetails ? 'Hide Details' : 'Show Details' }}
                     </button>
-                    <a 
-                      href="https://github.com/interlynk-io/sbomqs" 
-                      target="_blank" 
+                    <a
+                      href="https://github.com/interlynk-io/sbomqs"
+                      target="_blank"
                       class="link-button"
                     >
                       Learn About SBOM Quality
@@ -249,7 +235,7 @@ sudo chmod +x /usr/local/bin/sbomqs</pre>
                   </div>
                 </div>
               </div>
-              
+
               <div v-if="showScoreDetails" class="score-details-expanded">
                 <div class="details-header">
                   <h4>Detailed Quality Analysis</h4>
@@ -260,7 +246,7 @@ sudo chmod +x /usr/local/bin/sbomqs</pre>
                 <pre>{{ JSON.stringify(qualityScore, null, 2) }}</pre>
               </div>
             </div>
-            
+
             <div v-if="scanResult" class="result-section">
               <div class="result-header">
                 <span class="alert-icon">🔒</span>
@@ -269,7 +255,7 @@ sudo chmod +x /usr/local/bin/sbomqs</pre>
               <div class="result-content">
                 <pre>{{ scanResult }}</pre>
               </div>
-              
+
               <div v-if="remediationScript" class="remediation-section">
                 <div class="result-header">
                   <span class="success-icon">🛠️</span>
@@ -277,8 +263,8 @@ sudo chmod +x /usr/local/bin/sbomqs</pre>
                 </div>
                 <div class="result-content">
                   <pre>{{ remediationScript }}</pre>
-                  <button 
-                    @click="copyToClipboard(remediationScript, $event)" 
+                  <button
+                    @click="copyToClipboard(remediationScript, $event)"
                     class="copy-button">
                     Copy to Clipboard
                   </button>
@@ -293,11 +279,12 @@ sudo chmod +x /usr/local/bin/sbomqs</pre>
 </template>
 
 <script setup>
-import { ref, onErrorCaptured, computed } from 'vue'
-import VulnerabilityTrend from './components/VulnerabilityTrend.vue'
-import PackageMetrics from './components/PackageMetrics.vue'
-import DependencyGraph from './components/DependencyGraph.vue'
-import LicenseCompliance from './components/LicenseCompliance.vue'
+import { ref, onErrorCaptured, computed, defineAsyncComponent } from 'vue'
+
+// Lazy load components for better performance
+// These components are now used inside the AnalyticsView component
+// We don't need to import them directly in App.vue anymore
+const AnalyticsView = defineAsyncComponent(() => import('./components/AnalyticsView.vue'))
 
 const sbomSource = ref('')
 const isGenerating = ref(false)
@@ -313,10 +300,12 @@ const errorMessage = ref(null)
 const scanError = ref(null)
 const showScoreDetails = ref(false)
 
+
+
 // Computed properties for quality score
 const qualityScoreError = computed(() => {
   if (!qualityScore.value) return null
-  
+
   // Check for specific error messages
   if (qualityScore.value.error) {
     if (qualityScore.value.error.includes('sbomqs tool not installed')) {
@@ -324,13 +313,13 @@ const qualityScoreError = computed(() => {
     }
     return qualityScore.value.error
   }
-  
+
   return null
 })
 
 const scoreValue = computed(() => {
   if (!qualityScore.value || qualityScoreError.value) return 0
-  
+
   // Try to extract score from different possible formats
   if (qualityScore.value.score) {
     return parseFloat(qualityScore.value.score)
@@ -339,7 +328,7 @@ const scoreValue = computed(() => {
   } else if (qualityScore.value.files && qualityScore.value.files.length > 0) {
     return parseFloat(qualityScore.value.files[0].avg_score || 0)
   }
-  
+
   return 0
 })
 
@@ -351,7 +340,7 @@ const scoreCircleStyle = computed(() => {
   // Calculate color based on score (red to green gradient)
   const value = scoreValue.value
   let color
-  
+
   if (value >= 8) {
     color = '#10b981' // Green for excellent
   } else if (value >= 6) {
@@ -361,10 +350,10 @@ const scoreCircleStyle = computed(() => {
   } else {
     color = '#ef4444' // Red for poor
   }
-  
+
   // Calculate percentage for circle fill
   const percentage = (value / 10) * 100
-  
+
   return {
     background: `conic-gradient(${color} ${percentage}%, #e5e7eb ${percentage}% 100%)`
   }
@@ -381,9 +370,9 @@ const hasImprovementSuggestions = computed(() => {
 
 const improvementSuggestions = computed(() => {
   if (!qualityScore.value) return []
-  
+
   const suggestions = []
-  
+
   // Extract low scoring categories for improvement
   const categories = extractCategories(qualityScore.value)
   for (const category of categories) {
@@ -391,11 +380,11 @@ const improvementSuggestions = computed(() => {
       suggestions.push(`Improve ${category.name} elements (${category.score.toFixed(1)}/10)`)
     }
   }
-  
+
   // Add specific suggestions based on known patterns
   if (qualityScore.value.files && qualityScore.value.files.length > 0) {
     const file = qualityScore.value.files[0]
-    
+
     if (file.scores) {
       for (const score of file.scores) {
         if (score.score === 0 && score.max_score > 0) {
@@ -404,14 +393,14 @@ const improvementSuggestions = computed(() => {
       }
     }
   }
-  
+
   // Standard improvement suggestions if we have a low score
   if (scoreValue.value < 6) {
     suggestions.push('Ensure SBOM has supplier names for all components')
     suggestions.push('Include component relationships in SBOM')
     suggestions.push('Add license information for all components')
   }
-  
+
   return suggestions.slice(0, 5) // Limit to top 5 suggestions
 })
 
@@ -428,13 +417,13 @@ onErrorCaptured((err, instance, info) => {
   console.error('Component error captured:', err)
   console.error('Component:', instance)
   console.error('Error info:', info)
-  
+
   // Set error message based on error type without referencing any external variables
   const errMsg = err?.message || 'An unexpected error occurred'
-  
+
   // Use local reactive refs for error handling
   errorMessage.value = errMsg
-  
+
   // Prevent error from propagating further
   return false
 })
@@ -443,10 +432,10 @@ function extractCategories(scoreData) {
   if (!scoreData || !scoreData.files || !scoreData.files[0] || !scoreData.files[0].scores) {
     return []
   }
-  
+
   const scores = scoreData.files[0].scores
   const categories = {}
-  
+
   // Group scores by category and calculate averages
   scores.forEach(item => {
     if (!categories[item.category]) {
@@ -455,11 +444,11 @@ function extractCategories(scoreData) {
         count: 0
       }
     }
-    
+
     categories[item.category].total += (item.score / item.max_score) * 10
     categories[item.category].count++
   })
-  
+
   // Convert to array and calculate averages
   return Object.keys(categories).map(key => ({
     name: key,
@@ -469,6 +458,82 @@ function extractCategories(scoreData) {
 
 function toggleScoreDetails() {
   showScoreDetails.value = !showScoreDetails.value
+}
+
+// Navigation handler for components
+function handleNavigation(target) {
+  // Scroll to the target section
+  const targetSection = document.getElementById(target);
+  if (targetSection) {
+    targetSection.scrollIntoView({ behavior: 'smooth' });
+
+    // Update active nav link
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${target}`) {
+        link.classList.add('active');
+      }
+    });
+  }
+}
+
+// API service with caching and retry logic
+const apiCache = new Map()
+const API_BASE_URL = 'http://localhost:3000'
+
+async function fetchWithRetry(url, options, retries = 3, delay = 500) {
+  try {
+    const response = await fetch(url, options)
+    if (response.ok) return response
+
+    if (retries > 0 && [408, 429, 500, 502, 503, 504].includes(response.status)) {
+      await new Promise(resolve => setTimeout(resolve, delay))
+      return fetchWithRetry(url, options, retries - 1, delay * 2)
+    }
+
+    return response
+  } catch (error) {
+    if (retries > 0) {
+      await new Promise(resolve => setTimeout(resolve, delay))
+      return fetchWithRetry(url, options, retries - 1, delay * 2)
+    }
+    throw error
+  }
+}
+
+async function apiRequest(endpoint, method = 'GET', data = null, useCache = false) {
+  const url = `${API_BASE_URL}/${endpoint}`
+  const cacheKey = `${method}:${url}:${JSON.stringify(data)}`
+
+  // Return cached response if available and cache is enabled
+  if (useCache && apiCache.has(cacheKey)) {
+    return apiCache.get(cacheKey)
+  }
+
+  const options = {
+    method,
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: data ? JSON.stringify(data) : undefined
+  }
+
+  const response = await fetchWithRetry(url, options)
+
+  if (!response.ok) {
+    const errorText = await response.text()
+    throw new Error(errorText || `HTTP error! status: ${response.status}`)
+  }
+
+  const result = await response.json()
+
+  // Cache the response if cache is enabled
+  if (useCache) {
+    apiCache.set(cacheKey, result)
+  }
+
+  return result
 }
 
 async function generateSBOM() {
@@ -484,30 +549,23 @@ async function generateSBOM() {
       return
     }
 
-    const response = await fetch('http://localhost:3000/generate-sbom', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        sbomSource: sbomSource.value
-      })
+    const data = await apiRequest('generate-sbom', 'POST', {
+      sbomSource: sbomSource.value
     })
-    
-    if (!response.ok) {
-      const errorText = await response.text()
-      errorMessage.value = errorText || `HTTP error! status: ${response.status}`
-      return
-    }
-    
-    const data = await response.json()
+
     if (!data?.sbomData) {
       errorMessage.value = 'No SBOM data received from server'
       return
     }
-    
+
+    // Store the raw SBOM data
     sbomResult.value = data.sbomData
+
+    // Set the generated flag to true
     sbomGenerated.value = true
+
+    // Log success for debugging
+    console.log('SBOM generated successfully, data available:', !!sbomData.value)
   } catch (error) {
     console.error('Error generating SBOM:', error)
     errorMessage.value = error?.message || 'An unexpected error occurred'
@@ -535,13 +593,13 @@ async function scanSBOM() {
         useAdvanced: useAdvanced.value
       })
     })
-    
+
     if (!response.ok) {
       const errorText = await response.text()
       scanError.value = errorText || `HTTP error! status: ${response.status}`
       return
     }
-    
+
     const data = await response.json()
     if (!data) {
       scanError.value = 'No scan data received from server'
@@ -563,53 +621,55 @@ async function scanSBOM() {
 function copyToClipboard(text, event) {
   try {
     if (!text) return;
-    
+
     // Make a local copy of any variables needed to prevent reference errors
     const textToCopy = String(text);
     const currentEvent = event || null;
-    
+
+    // Use a single function to update button text for better code reuse
+    const updateButtonText = (button, success = true) => {
+      if (!button) return;
+      const originalText = button.textContent || 'Copy to Clipboard';
+      button.textContent = success ? '✅ Copied!' : '❌ Failed';
+      setTimeout(() => {
+        button.textContent = originalText;
+      }, 2000);
+    };
+
+    // Try the modern Clipboard API first
     navigator.clipboard.writeText(textToCopy)
       .then(() => {
-        try {
-          // Use the event target directly to update the clicked button
-          if (currentEvent && currentEvent.target) {
-            const copyButton = currentEvent.target;
-            const originalText = copyButton.textContent || 'Copy to Clipboard';
-            copyButton.textContent = '✅ Copied!';
-            setTimeout(() => {
-              copyButton.textContent = originalText;
-            }, 2000);
-          }
-        } catch (buttonError) {
-          console.error('Error updating button text:', buttonError);
+        if (currentEvent?.target) {
+          updateButtonText(currentEvent.target, true);
         }
       })
       .catch(err => {
-        console.error('Failed to copy text: ', err);
-        
+        console.error('Clipboard API failed:', err);
+
         // Fallback for browsers without clipboard API
         const textarea = document.createElement('textarea');
         textarea.value = textToCopy;
         textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
         document.body.appendChild(textarea);
         textarea.focus();
         textarea.select();
-        
+
         try {
-          const successful = document.execCommand('copy');
-          if (successful && currentEvent && currentEvent.target) {
-            const copyButton = currentEvent.target;
-            const originalText = copyButton.textContent || 'Copy to Clipboard';
-            copyButton.textContent = '✅ Copied!';
-            setTimeout(() => {
-              copyButton.textContent = originalText;
-            }, 2000);
+          // Use execCommand as fallback (deprecated but still works in most browsers)
+          const success = document.execCommand('copy');
+
+          if (currentEvent?.target) {
+            updateButtonText(currentEvent.target, success);
           }
         } catch (execError) {
           console.error('Fallback copy failed:', execError);
+          if (currentEvent?.target) {
+            updateButtonText(currentEvent.target, false);
+          }
+        } finally {
+          document.body.removeChild(textarea);
         }
-        
-        document.body.removeChild(textarea);
       });
   } catch (error) {
     console.error('Error in copyToClipboard function:', error);
@@ -619,8 +679,19 @@ function copyToClipboard(text, event) {
 const sbomData = computed(() => {
   if (!sbomResult.value) return null;
   try {
-    return JSON.parse(sbomResult.value);
-  } catch (e) {
+    // If sbomResult is a string (JSON), parse it
+    if (typeof sbomResult.value === 'string') {
+      return JSON.parse(sbomResult.value);
+    }
+
+    // If it's already an object, return it
+    if (typeof sbomResult.value === 'object') {
+      return sbomResult.value;
+    }
+
+    return null;
+  } catch (error) {
+    console.error('Error parsing SBOM data:', error);
     return null;
   }
 });
@@ -629,23 +700,23 @@ const sbomData = computed(() => {
 <style>
 :root {
   /* Modern Color Palette */
-  --primary-color: #2563eb;
-  --primary-hover: #1d4ed8;
+  --primary-color: #0d9488; /* Teal/Cyan */
+  --primary-hover: #0f766e; /* Darker Teal/Cyan */
   --secondary-color: #475569;
   --success-color: #059669;
   --danger-color: #dc2626;
   --warning-color: #d97706;
-  --info-color: #2563eb;
+  --info-color: #0d9488; /* Match primary */
   --light-color: #f8fafc;
-  --dark-color: #0f172a;
+  --dark-color: #111827; /* Slightly darker */
   --border-color: #e2e8f0;
-  --sidebar-width: 280px;
+  --sidebar-width: 260px; /* Slightly narrower */
   --header-height: 70px;
   --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --transition-speed: 0.3s;
-  
+
   /* Enhanced Typography */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; /* Modern system font stack */
   --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
@@ -717,6 +788,7 @@ body {
   line-height: var(--line-height-tight);
   background: linear-gradient(135deg, #ffffff, #cbd5e1);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   position: relative;
 }
@@ -809,6 +881,9 @@ body {
 .container {
   max-width: 1200px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr; /* Default to single column */
+  gap: 2rem; /* Add gap between grid items */
 }
 
 /* Enhanced Card Styles */
@@ -821,9 +896,8 @@ body {
   border: 1px solid var(--border-color);
   transition: all 0.3s ease;
   position: relative;
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
+  /* Remove max-width and centering margins from individual cards */
+  /* Let the grid container manage the layout */
 }
 
 .card:hover {
@@ -1247,9 +1321,30 @@ input:checked + .toggle-slider:before {
 }
 
 /* Enhanced Responsive Design */
+@media (min-width: 1024px) { /* Apply 2-column layout on larger screens */
+  .container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Make the generate card span both columns if desired, or adjust as needed */
+  .generate-card {
+     grid-column: span 2; /* Example: Make generate card wider */
+  }
+
+  /* Adjust analytics grid items if the container is now 2 columns */
+   .analytics-grid {
+     grid-template-columns: repeat(2, 1fr);
+     gap: 1.5rem;
+   }
+}
+
 @media (max-width: 1280px) {
   .analytics-grid {
     gap: 1.5rem;
+  }
+  /* Adjust container gap for slightly smaller screens if needed */
+  .container {
+     gap: 1.5rem;
   }
 }
 
@@ -1258,12 +1353,12 @@ input:checked + .toggle-slider:before {
     width: 240px;
     padding: 1.5rem 1rem;
   }
-  
+
   .main-content {
     margin-left: 240px;
     padding: 2rem;
   }
-  
+
   .analytics-grid > *:nth-child(1),
   .analytics-grid > *:nth-child(2) {
     grid-column: span 2;
@@ -1277,35 +1372,35 @@ input:checked + .toggle-slider:before {
     position: relative;
     padding: 1rem;
   }
-  
+
   .sidebar-header {
     padding: 1rem 0;
     margin-bottom: 1rem;
     text-align: center;
   }
-  
+
   .sidebar-header h1 {
     font-size: var(--font-size-2xl);
   }
-  
+
   .nav-links {
     flex-direction: row;
     justify-content: center;
     flex-wrap: wrap;
     gap: 0.5rem;
   }
-  
+
   .nav-link {
     padding: 0.75rem 1rem;
     margin-bottom: 0;
     font-size: var(--font-size-base);
   }
-  
+
   .nav-icon {
     margin-right: 0.5rem;
     font-size: 1.25rem;
   }
-  
+
   .sidebar-footer {
     display: none;
   }
@@ -1322,20 +1417,20 @@ input:checked + .toggle-slider:before {
   .primary-button {
     width: 100%;
   }
-  
+
   .card-header {
     padding: 1.5rem;
   }
-  
+
   .card-body {
     padding: 1.5rem;
   }
-  
+
   .analytics-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
+
   .analytics-grid > * {
     grid-column: span 1;
   }
@@ -1345,29 +1440,29 @@ input:checked + .toggle-slider:before {
   .container {
     padding: 0;
   }
-  
+
   .card {
     border-radius: 0;
     border-left: none;
     border-right: none;
     box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.1);
   }
-  
+
   .card-header {
     padding: 1.25rem;
   }
-  
+
   .card-body {
     padding: 1.25rem;
   }
-  
+
   .step-number {
     width: 36px;
     height: 36px;
     font-size: var(--font-size-base);
     margin-right: 0.75rem;
   }
-  
+
   .card-header h2 {
     font-size: var(--font-size-xl);
   }
